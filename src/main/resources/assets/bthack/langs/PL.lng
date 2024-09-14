@@ -1,0 +1,191 @@
+//CLIENT
+"lang.module.BThackCape": Zastępuje pelerynę i elytry gracza peleryną i elytrami z klienta BThack.
+"lang.module.ClickGui": Gui z wyborem i konfiguracją modułów.
+"lang.module.DiscordRPC": Otrzymujesz aktywność BThack.
+"lang.module.FPSReducer": Ogranicza fps, jeśli gra jest nieostra.
+"lang.module.HUD": Włączanie i konfigurowanie modułów HUD.
+"lang.module.HudEditor": Otwiera menu HUD edytor.
+"lang.module.Language": Zmienia język interfejsu BThack.
+"lang.module.MemoryCleaner": Włączanie i konfigurowanie modułu czyszczenia pamięci.
+
+//COMBAT
+"lang.module.KillAura": Atakuje graczy, zwierzęta i moby w określonym promieniu.
+"lang.module.AimBot": Automatycznie sprawdza najbliższą jednostkę w określonym promieniu.
+"lang.module.AutoShield": Jeśli masz tarczę w prawej ręce, aktywuje się ona, gdy w twoją stronę poleci strzała.
+"lang.module.AutoSword": Automatycznie podnosi miecz przy uderzeniu.
+"lang.module.Criticals": Wszystkie trafienia będą krytyczne.
+"lang.module.FastBow": Spam z dziobu.
+"lang.module.FireBallAura": Odrzuca kule ognia lecące w twoją stronę.
+"lang.module.HitSound": Odtwarza dźwięk przy uderzeniu.
+"lang.module.NoFriendDamage": Nie możesz uderzyć swoich przyjaciół.
+
+//MISC
+"lang.module.CleanMemory": Czyści pamięć RAM po włączeniu zasilania.
+"lang.module.CreeperRadar": Ostrzega, jeśli w pobliżu znajduje się creeper.
+"lang.module.EnemyRadar": Ostrzega, jeśli w pobliżu znajduje się wróg.
+"lang.module.GameCrasher": Powoduje awarię Minecrafta, lol.
+"lang.module.ItemRandomizer": Gdy moduł jest włączony, losowo zmienia bieżący slot na pasku skrótów.
+"lang.module.OpenedGuiInfo": Wysyła informacje o otwartym GUI.
+"lang.module.PistonSoundDelay": Redukuje irytujący dźwięk tłoków, gdy jest używany obok Lag Machine.
+"lang.module.PortalGod": Gdy jesteś w portalu, możesz otworzyć GUI.
+"lang.module.Timer": Przyspiesza/spowalnia tiki gry.
+"lang.module.TopperRadar": Ostrzega, jeśli w pobliżu znajduje się topper.
+
+//MOVEMENT
+"lang.module.AutoJump": Automatycznie skacze.
+"lang.module.CameraRotator": Obraca kamerę :/
+"lang.module.ElytraFastClose": Natychmiast zamyka elytrę po dotknięciu podłogi.
+"lang.module.ElytraFlight": Umożliwia szybkie latanie na elytrze.
+"lang.module.EntitySpeed": Zmienia prędkość jeżdżących jednostek.
+"lang.module.Flip": Obraca gracza o 180 stopni.
+"lang.module.GuiMove": Pozwala graczowi chodzić, gdy GUI jest otwarte.
+"lang.module.Impulse": Impuls, który jest dostarczany w kierunku twojego wzroku.
+"lang.module.NoRotate": Ustawia kamerę na najbliższej osi.
+"lang.module.NoSlow": Zapobiega spowolnieniu gracza.
+"lang.module.NoSRotations": Blokuje obroty kamery wyzwalane przez serwer.
+"lang.module.SafeWalk": Pozwala uniknąć przekraczania krawędzi bloków.
+"lang.module.Scaffold": Automatycznie umieszcza bloki pod tobą.
+"lang.module.ShiftSpam": Spamowanie przysiadu :/
+"lang.module.Speed": Sprawia, że gracz jest szybszy.
+"lang.module.Sprint": Gracz zawsze biegnie.
+"lang.module.Strafe": Gracz może poruszać się bez zwalniania.
+
+//PLAYER
+"lang.module.AutoDisconnect": Wyłączenie gracza, jeśli jego zdrowie jest poniżej limitu.
+"lang.module.AutoEat": Po prostu automatycznie je.
+"lang.module.AutoFirework": Po aktywacji fajerwerki zostaną użyte, jeśli gracz leci.
+"lang.module.AutoPearl": Po włączeniu wyrzuca perły krawędziowe.
+"lang.module.AutoRespawn": Automatycznie wskrzesza gracza.
+"lang.module.BabyModel": Twój model zmienia się w model dziecka.
+"lang.module.ElytraReplace": Automatycznie zastępuje elytrę, jeśli jej wytrzymałość osiągnie minimalny limit.
+"lang.module.ChestStealer": Kradzież przedmiotów ze skrzyni.
+"lang.module.ElytraSwap": Po włączeniu zastępuje elytrę śliniakiem, a także w odwrotnej kolejności.
+"lang.module.FakePlayer": Tworzy fałszywego gracza.
+"lang.module.FastPlace": Umożliwia bardzo szybkie umieszczanie bloków.
+"lang.module.FastUse": Umożliwia szybsze korzystanie z niektórych przedmiotów.
+"lang.module.FreeCam": Oddziela kamerę gracza od ciała.
+"lang.module.Introvert": Zostaniesz rozłączony, jeśli w pobliżu zostanie wykryty gracz.
+"lang.module.MultiFakePlayer": Działa jak zwykły FakePlayer, ale można go używać do tworzenia wielu graczy jednocześnie.
+"lang.module.PMSpammer": Zaawansowany spamer do wysyłania prywatnych wiadomości do wszystkich graczy na serwerze.
+"lang.module.Spammer": Automatycznie wysyła tekst do pokoju rozmów.
+"lang.module.NoJumpDelay": Wyłącza opóźnienie skoków.
+"lang.module.NoServerSlot": Blokuje możliwość zmiany bieżącego slotu przez serwer.
+"lang.module.NoSwing": Anuluje animację machania ręką na serwerze lub kliencie.
+"lang.module.Velocity": Wyłącza odrzut gracza.
+"lang.module.XCarry": Umożliwia zapisywanie przedmiotów w slotach rzemieślniczych.
+
+//RENDER
+"lang.module.Africa": Poczuj się jak Afrykańczyk.
+"lang.module.AntiHazard": Wyłącza efekty nudności i ślepoty.
+"lang.module.BlockHighlight": Podświetla blok, na który patrzysz.
+"lang.module.Caipirinha": Caipirinha! Caipirinha!
+"lang.module.CameraClip": Umożliwia kamerze przechodzenie przez bloki.
+"lang.module.ChestESP": Podświetla pojemniki.
+"lang.module.CS_Crosshair": Zmienia celownik na celownik z Counter Strike'a.
+"lang.module.ESP": Podświetla graczy, moby i przedmioty.
+"lang.module.FullBright": Zwiększa jasność gamutu.
+"lang.module.GammaColor": Zmienia kolor gamutu.
+"lang.module.HandTweaks": Dodaje różne ustawienia dla rąk.
+"lang.module.HoleESP": Podkreśla bezpieczne dziury dla kpvp.
+"lang.module.LastOpenChest": Podświetla ostatni otwarty pojemnik.
+"lang.module.ModifyCamera": Umożliwia dostosowanie kamery do własnych upodobań.
+"lang.module.NoOverlay": Wyłącza renderowanie nakładki.
+"lang.module.NoRender": Wyłącza renderowanie niektórych elementów.
+"lang.module.Radar": Radar wyświetlający podmioty znajdujące się w pobliżu.
+"lang.module.Search": Podkreśla właściwe bloki.
+"lang.module.Tooltips": Pokazuje zawartość shulkera.
+"lang.module.Tracers": Rysuje linie prowadzące do podmiotów.
+"lang.module.Xray": Umożliwia anulowanie rysowania bloków.
+
+//WORLD
+"lang.module.CloudsColor": Zmienia kolor chmur.
+"lang.module.CustomDayTime": Ustawia niestandardową porę dnia.
+"lang.module.FogColor": Zmienia kolor mgły.
+"lang.module.NoWeather": Wyłącza pogodę.
+"lang.module.SkyColor": Zmienia kolor nieba na świecie.
+"lang.module.WorldElements": Moduł do dostrajania świata.
+
+
+//Module messages
+"lang.module.CreeperRadar.spotted": Creeper został zauważony! %sX: %s  %sY: %s  %sZ: %s
+"lang.module.EnemyRadar.spotted": Wróg został zauważony! %sName: %s  %sHealth: %s  %sDirection: %s
+"lang.module.TopperRadar.spotted": %sTopper %szostał zauważony! %sName: %s  %sHealth: %s  %sDirection: %s
+"lang.module.radars.disconnectCountdown": Rozpoczyna się odliczanie do wyłączenia!
+"lang.module.radars.disconnectAfter": Wyłączenie po %s sekundach.
+"lang.module.PMSpammer.startSpam":  Zaczynam wysyłać wiadomości do wszystkich graczy...
+"lang.module.PMSpammer.trySend":  Próba wysłania wiadomości do gracza: %s
+"lang.module.PMSpammer.movingToNext":  Wiadomość wysłana do wszystkich graczy. Przejście do następnej wiadomości...
+"lang.module.Scaffold.noBlocks": W spisie nie znaleziono pasujących bloków.
+"lang.module.AutoBuilder.alreadyBuilding": Już coś budujesz.
+"lang.module.AutoBuilder.notStandingOnGround": Nie stoisz na powierzchni!
+"lang.module.AutoBuilder.noNearBlocks": W pobliżu nie znaleziono pasujących jednostek.
+"lang.module.AutoBuilder.errorSelect": Błąd w wyborze odpowiedniego schematu.
+
+
+//Screens
+"lang.screen.mainmenu.singleplayer": Pojedyncza gra
+"lang.screen.mainmenu.multiplayer": Gra sieciowa
+"lang.screen.mainmenu.options": Ustawienia
+"lang.screen.mainmenu.quit": Wyjdź
+"lang.screen.mainmenu.setwallpaper": Wybierz tapetę
+"lang.screen.selectwallpaper.confirm": Potwierdzenie
+
+
+//Commands
+"lang.command.invalidargs": Nieprawidłowe argumenty polecenia! Spróbuj —
+"lang.command.ClanList.description": Wyświetla całą listę klanów oraz ich członków.
+"lang.command.CommandList.description": Wyświetla listę wszystkich istniejących poleceń BThack.
+"lang.command.EnemyList.description": Wyświetla całą listę wrogów.
+"lang.command.FriendList.description": Wyświetla całą listę znajomych.
+"lang.command.XrayList.description": Wyświetla całą listę xray bloków.
+"lang.command.SearchList.description": Wyświetla całą listę search bloków.
+"lang.command.ClanMembers.description": Dodaje/usuwa członka klanu.
+"lang.command.Clans.description": Dodaje/usuwa klan.
+"lang.command.ClanStatus.description": Zmienia status klanu.
+"lang.command.Enemies.description": Dodaje/usuwa wroga.
+"lang.command.Friends.description": Dodaje/usuwa znajomego.
+"lang.command.CleanMemory.description": Czyści pamięć RAM.
+"lang.command.Refresh.description": Aktualizuje listę przyjaciół/wrogów/sprzymierzeńców (konieczne, jeśli lista została zmieniona za pomocą pliku txt).
+"lang.command.Rotate.description": Obraca kamerę gracza o określoną liczbę.
+"lang.command.Xray.description": Dodaje/usuwa blok z xray listy.
+"lang.command.Search.description": Dodaje/usuwa blok z search listy.
+"lang.command.Bind.description": Wiąże moduł z określonym kluczem.
+
+
+"lang.command.ClanList.message1": Wszystkie klany:
+"lang.command.ClanList.message2":   Uczestnicy:
+"lang.command.CommandList.message": Wszystkie drużyny BThack:
+"lang.command.EnemyList.message": Wszyscy twoi wrogowie:
+"lang.command.FriendList.message": Wszyscy znajomi:
+"lang.command.XrayList.message": Wszystkie xray bloki:
+"lang.command.SearchList.message": Wszystkie search bloki:
+"lang.command.ClanMembers.memberAdded": Członek został pomyślnie dodany!
+"lang.command.ClanMembers.memberRemoved": Członek został pomyślnie usunięty!
+"lang.command.ClanMembers.memberInTheClan": Uczestnik jest już członkiem klanu.
+"lang.command.ClanMembers.memberNoLongerInTheClan": Uczestnik nie jest członkiem klanu.
+"lang.command.ClanMembers.noSuchClan": Ten klan nie istnieje. Utwórz go za pomocą polecenia $clans add ... .
+"lang.command.Clans.clanAdded": Klan został pomyślnie dodany!
+"lang.command.Clans.clanExists": Ten klan już istnieje!
+"lang.command.Clans.clanRemoved": Klan został pomyślnie usunięty!
+"lang.command.Clans.clanDoesn'tExists": Ten klan nie istnieje!
+"lang.command.ClanStatus.setStatus": Klan %s został pomyślnie ustawiony w statusie: %s
+"lang.command.ClanStatus.incorrectStatus": Nieprawidłowy status klanu! Wypróbuj następujące opcje: Friendly / Neutral / Enemy.
+"lang.command.Enemies.enemyAdded": Wróg został pomyślnie dodany!
+"lang.command.Enemies.enemyExists": Ten wróg już tam jest!
+"lang.command.Enemies.enemyRemoved": Wróg został usunięty z listy!
+"lang.command.Enemies.enemyDoesn'tExists": Ten wróg nie istnieje!
+"lang.command.Friends.friendAdded": Dodano znajomego!
+"lang.command.Friends.friendExists": Mamy już takiego przyjaciela!
+"lang.command.Friends.friendRemoved": Znajomy usunięty z listy!
+"lang.command.Friends.friendDoesn'tExists": Ten przyjaciel nie istnieje!
+"lang.command.Refresh.friendRefreshed": Lista znajomych została zaktualizowana!
+"lang.command.Refresh.enemyRefreshed": Lista wrogów została zaktualizowana!
+"lang.command.Refresh.clanRefreshed": Lista klanów została zaktualizowana!
+"lang.command.Xray.invalidName": Nieprawidłowa nazwa bloku!
+"lang.command.Xray.blockAdded": Blok został pomyślnie dodany!
+"lang.command.Xray.blockAlreadyAdded": Ten blok już tam jest.
+"lang.command.Xray.blockRemoved": Blok został pomyślnie usunięta!
+"lang.command.Xray.blockAlreadyRemoved": Ten blok nie został dodany.
+"lang.command.Xray.listCleared": Lista xray została wyczyszczona!
+"lang.command.Bind.bound": Moduł %s został powiązany z kluczem %s.
+"lang.command.Bind.noFindModule": Nie można znaleźć modułu %s.
