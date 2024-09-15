@@ -4,6 +4,7 @@ import com.ferra13671.BThack.api.Interfaces.Mc;
 import com.ferra13671.BThack.api.Utils.BlockUtils;
 import com.ferra13671.BThack.api.Utils.InventoryUtils;
 import com.ferra13671.BThack.api.Utils.Modules.AimBotUtils;
+import com.ferra13671.BThack.api.Utils.Player.GrimUtils;
 import com.ferra13671.BThack.api.Utils.RotateUtils;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
@@ -67,12 +68,12 @@ public class BuildManager implements Mc {
         if (sneak)
             mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.PRESS_SHIFT_KEY));
 
-        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), rotations[0], rotations[1], mc.player.isOnGround()));
+        GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
         mc.interactionManager.interactBlock(mc.player, Hand.MAIN_HAND, bhr);
         mc.player.networkHandler.sendPacket(new HandSwingC2SPacket(Hand.MAIN_HAND));
 
         mc.player.networkHandler.sendPacket(new ClientCommandC2SPacket(mc.player, ClientCommandC2SPacket.Mode.RELEASE_SHIFT_KEY));
-        mc.player.networkHandler.sendPacket(new PlayerMoveC2SPacket.Full(mc.player.getX(), mc.player.getY(), mc.player.getZ(), mc.player.getYaw(), mc.player.getPitch(), mc.player.isOnGround()));
+        GrimUtils.sendPostActionGrimPackets();
     }
 
     protected static boolean check(ArrayList<BlockPos> positions) {
