@@ -28,6 +28,7 @@ import java.util.Comparator;
 public final class KillAuraUtils implements Mc {
     public static void CoolDownAttack(Entity target, Thread thread, int postCooldownDelay, RotateMode rotateMode, int packets) {
         if (mc.player.getAttackCooldownProgress(0) >= 1.0) {
+            float[] rotations = AimBotUtils.rotations(target);
             try {
                 if (postCooldownDelay > 0 && thread != null)
                     thread.sleep(postCooldownDelay);
@@ -39,21 +40,23 @@ public final class KillAuraUtils implements Mc {
                 }
                 case VANILLA -> AimBotUtils.rotateToEntity(target);
                 case GRIM -> {
-                    float[] rotations = AimBotUtils.rotations(target);
-                    GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
                     mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
+                    GrimUtils.sendPostActionGrimPackets();
+                    mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
+                    GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
                 }
             }
             mc.interactionManager.attackEntity(mc.player, target);
             mc.player.swingHand(Hand.MAIN_HAND);
             if (rotateMode == RotateMode.GRIM) {
-                GrimUtils.sendPostActionGrimPackets();
                 mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
+                GrimUtils.sendPostActionGrimPackets();
             }
         }
     }
 
     public static void DelayAttack(Entity target, RotateMode rotateMode, int packets) {
+        float[] rotations = AimBotUtils.rotations(target);
         switch (rotateMode) {
             case PACKET -> {
                 for (int i = 0; i < packets; i++)
@@ -61,14 +64,18 @@ public final class KillAuraUtils implements Mc {
             }
             case VANILLA -> AimBotUtils.rotateToEntity(target);
             case GRIM -> {
-                float[] rotations = AimBotUtils.rotations(target);
+                mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
+                GrimUtils.sendPostActionGrimPackets();
+                mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
                 GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
             }
         }
         mc.interactionManager.attackEntity(mc.player, target);
         mc.player.swingHand(Hand.MAIN_HAND);
-        if (rotateMode == RotateMode.GRIM)
+        if (rotateMode == RotateMode.GRIM) {
+            mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
             GrimUtils.sendPostActionGrimPackets();
+        }
     }
 
     public static PlayerEntity filterPlayers(NumberSetting range, BooleanSetting friends, BooleanSetting teammates, BooleanSetting clanManager, ModeSetting clanMode, ModeSetting targetClan) {
