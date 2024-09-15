@@ -19,6 +19,7 @@ import net.minecraft.entity.mob.WaterCreatureEntity;
 import net.minecraft.entity.passive.GolemEntity;
 import net.minecraft.entity.passive.PassiveEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.network.packet.c2s.play.PlayerInputC2SPacket;
 import net.minecraft.util.Hand;
 
 import java.util.ArrayList;
@@ -40,12 +41,15 @@ public final class KillAuraUtils implements Mc {
                 case GRIM -> {
                     float[] rotations = AimBotUtils.rotations(target);
                     GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
+                    mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
                 }
             }
             mc.interactionManager.attackEntity(mc.player, target);
             mc.player.swingHand(Hand.MAIN_HAND);
-            if (rotateMode == RotateMode.GRIM)
+            if (rotateMode == RotateMode.GRIM) {
                 GrimUtils.sendPostActionGrimPackets();
+                mc.player.networkHandler.sendPacket(new PlayerInputC2SPacket(mc.player.input.movementSideways, mc.player.input.movementForward, mc.player.input.jumping, mc.player.input.sneaking));
+            }
         }
     }
 
