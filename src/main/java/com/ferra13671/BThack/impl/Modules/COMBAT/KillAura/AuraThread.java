@@ -29,20 +29,14 @@ public class AuraThread extends Thread implements Mc {
                         switch (KillAura.rotateMode.getValue()) {
                             case "Packet" -> rotateMode = RotateMode.PACKET;
                             case "Vanilla" -> rotateMode = RotateMode.VANILLA;
+                            case "Grim" -> rotateMode = RotateMode.GRIM;
                             default -> rotateMode = RotateMode.NONE;
                         }
                         switch (KillAura.attackMode.getValue()) {
                             case "CoolDown":
-                                if (KillAura.rotateMode.getValue().equals("Packet")) {
-                                    if (mc.player.getAttackCooldownProgress(0) >= 1.0)
-                                        AimBotUtils.packetRotateToEntity(entity);
-                                }
                                 KillAuraUtils.CoolDownAttack(entity, this, (int) KillAura.postCooldown.getValue(), rotateMode, packets);
                                 break;
                             case "Delay":
-                                if (KillAura.rotateMode.getValue().equals("Packet")) {
-                                    AimBotUtils.packetRotateToEntity(entity);
-                                }
                                 KillAuraUtils.DelayAttack(entity, rotateMode, packets);
                                 try {
                                     sleep(delay);
@@ -62,6 +56,7 @@ public class AuraThread extends Thread implements Mc {
             switch (KillAura.rotateMode.getValue()) {
                 case "Packet" -> rotateMode = RotateMode.PACKET;
                 case "Vanilla" -> rotateMode = RotateMode.VANILLA;
+                case "Grim" -> rotateMode = RotateMode.GRIM;
                 default -> rotateMode = RotateMode.NONE;
             }
             switch (KillAura.attackMode.getValue()) {

@@ -47,7 +47,7 @@ public class KillAura extends Module {
         mode = new ModeSetting("Mode", this, new ArrayList<>(Arrays.asList("Aura", "TriggerBot")));
         attackMode = new ModeSetting("AttackMode", this, new ArrayList<>(Arrays.asList("CoolDown", "Delay")));
         range = new NumberSetting("Range", this, 4.0, 1, 10, false, () -> mode.getValue().equals("Aura"));
-        rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "None")), () -> !mode.getValue().equals("TriggerBot"));
+        rotateMode = new ModeSetting("RotateMode", this, new ArrayList<>(Arrays.asList("Packet", "Vanilla", "Grim", "None")), () -> !mode.getValue().equals("TriggerBot"));
         packets = new NumberSetting("Packets", this, 1, 1, 5, true, () -> rotateMode.getValue().equals("Packet") && mode.getValue().equals("Aura"));
         delay = new NumberSetting("Delay(Second)", this, 1.4, 0.1, 4, false, () -> attackMode.getValue().equals("Delay"));
         postCooldown = new NumberSetting("Post Cooldown", this, 0, 0, 100, true, () -> attackMode.getValue().equals("CoolDown"));
