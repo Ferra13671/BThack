@@ -8,6 +8,7 @@ import com.ferra13671.BThack.api.Social.Clans.Clan;
 import com.ferra13671.BThack.api.Social.Clans.ClanStatus;
 import com.ferra13671.BThack.api.Social.Clans.ClansUtils;
 import com.ferra13671.BThack.api.Social.Friends.FriendsUtils;
+import com.ferra13671.BThack.api.Utils.Player.GrimUtils;
 import com.ferra13671.BThack.api.Utils.Player.PlayerUtils;
 import com.ferra13671.BThack.impl.Modules.COMBAT.KillAura.RotateMode;
 import net.minecraft.entity.Entity;
@@ -36,9 +37,15 @@ public final class KillAuraUtils implements Mc {
                         AimBotUtils.packetRotateToEntity(target);
                 }
                 case VANILLA -> AimBotUtils.rotateToEntity(target);
+                case GRIM -> {
+                    float[] rotations = AimBotUtils.rotations(target);
+                    GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
+                }
             }
             mc.interactionManager.attackEntity(mc.player, target);
             mc.player.swingHand(Hand.MAIN_HAND);
+            if (rotateMode == RotateMode.GRIM)
+                GrimUtils.sendPostActionGrimPackets();
         }
     }
 
@@ -49,9 +56,15 @@ public final class KillAuraUtils implements Mc {
                     AimBotUtils.packetRotateToEntity(target);
             }
             case VANILLA -> AimBotUtils.rotateToEntity(target);
+            case GRIM -> {
+                float[] rotations = AimBotUtils.rotations(target);
+                GrimUtils.sendPreActionGrimPackets(rotations[0], rotations[1]);
+            }
         }
         mc.interactionManager.attackEntity(mc.player, target);
         mc.player.swingHand(Hand.MAIN_HAND);
+        if (rotateMode == RotateMode.GRIM)
+            GrimUtils.sendPostActionGrimPackets();
     }
 
     public static PlayerEntity filterPlayers(NumberSetting range, BooleanSetting friends, BooleanSetting teammates, BooleanSetting clanManager, ModeSetting clanMode, ModeSetting targetClan) {
