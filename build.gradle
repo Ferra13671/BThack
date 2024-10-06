@@ -63,10 +63,10 @@ dependencies {
     //Without this shit, weird stuff happens with running the client in the plugin creation environment.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    library "dev.babbaj:nether-pathfinder:${nether_pathfinder_version}"
+    //library "dev.babbaj:nether-pathfinder:${nether_pathfinder_version}"
 
     // Baritone (https://github.com/MeteorDevelopment/baritone)
-    modInclude "meteordevelopment:baritone:${project.baritone_version}-SNAPSHOT"
+    //modInclude "meteordevelopment:baritone:${project.baritone_version}-SNAPSHOT"
 }
 
 loom {
