@@ -1,0 +1,31 @@
+group = 'com.ferra13671'
+
+repositories {
+    maven {
+        name = 'ferra13671-maven'
+        url = 'https://ferra13671.github.io/maven/'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+}
+
+void libraries(Object... libraries) {
+    for (Object lib : libraries)
+        dependencies {
+            library lib
+        }
+}
+
+shadowJar {
+    configurations = [project.configurations.shadow]
+}
+
+remapJar {
+    dependsOn shadowJar
+    inputFile.set(shadowJar.archiveFile)
+}

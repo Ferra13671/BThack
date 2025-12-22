@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "bthack-ide-launch",
+  "version": "${version}",
+  "name": "IDE launcher",
+  "description": "BThack launcher for IDE.",
+  "authors": ["ferra13671"],
+  "contact": {
+    "repo": ""
+  },
+  "license": "MIT",
+  "icon": "",
+  "environment": "*",
+  "entrypoints": {
+    "preLaunch": [
+      "com.ferra13671.bthack.ide.IDELauncher"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
