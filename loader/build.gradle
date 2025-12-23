@@ -16,4 +16,7 @@ dependencies {
     implementation "com.ferra13671:comet-renderer-better-exceptions:2.0"
     implementation "com.ferra13671:comet-renderer-post-effects:2.0"
     implementation "com.ferra13671:comet-renderer-shader-libraries:2.0"
+
+    library rootProject.project("loader-api")
+    runtimeOnly rootProject
 }

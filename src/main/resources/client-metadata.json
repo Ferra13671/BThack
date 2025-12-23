@@ -1,0 +1,4 @@
+{
+  "id": "bthack-client",
+  "entrypoint": "com.ferra13671.bthack.BThackClient"
+}

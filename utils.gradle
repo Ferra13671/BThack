@@ -8,17 +8,21 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    modImplementation.extendsFrom(modInclude)
+    include.extendsFrom(modInclude)
+
+    implementation.extendsFrom(library)
+    shadow.extendsFrom(library)
+}
+
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-}
 
-void libraries(Object... libraries) {
-    for (Object lib : libraries)
-        dependencies {
-            library lib
-        }
+    compileOnly("org.projectlombok:lombok:${project.lombok_version}")
+    annotationProcessor("org.projectlombok:lombok:${project.lombok_version}")
 }
 
 shadowJar {

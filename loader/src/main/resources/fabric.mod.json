@@ -13,11 +13,14 @@
   "environment": "*",
   "entrypoints": {
     "preLaunch": [
-      "com.ferra13671.bthack.loader.BThackLoader"
+      "com.ferra13671.bthack.loader.LaunchEntrypoint"
+    ],
+    "client": [
+      "com.ferra13671.bthack.loader.LaunchEntrypoint"
     ]
   },
   "depends": {
-    "fabricloader": ">=${loader_version}",
-    "minecraft": "${minecraft_version}"
+    "fabricloader": ">=0.16.14",
+    "minecraft": "1.21.11"
   }
 }

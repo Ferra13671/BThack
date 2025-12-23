@@ -1,0 +1,13 @@
+plugins {
+    id 'java-library'
+}
+
+version = '1.0-beta'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly "com.google.code.gson:gson:2.13.2"
+}

@@ -5,8 +5,17 @@ plugins {
 }
 
 apply from: file("utils.gradle")
-version = '3.0-beta'
+version = '1.0-beta'
 
 dependencies {
-    implementation project("loader")
+    implementation "com.ferra13671:comet-renderer:${project.comet_renderer_version}-HOTFIX-2"
+    implementation "com.ferra13671:gl-texture-utils:1.7.1"
+
+    //Plugins (optional)
+    implementation "com.ferra13671:comet-renderer-minecraft:1.21.11-fabric-mojang-${project.comet_renderer_version}"
+    implementation "com.ferra13671:comet-renderer-better-exceptions:2.0"
+    implementation "com.ferra13671:comet-renderer-post-effects:2.0"
+    implementation "com.ferra13671:comet-renderer-shader-libraries:2.0"
+
+    implementation project("loader-api")
 }

@@ -11,4 +11,4 @@ pluginManagement {
 rootProject.name = 'BThack'
 
 include("loader")
-include("launch")
+include("loader-api")
