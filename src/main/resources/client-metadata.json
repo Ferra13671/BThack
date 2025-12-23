@@ -1,4 +1,5 @@
 {
   "id": "bthack-client",
-  "entrypoint": "com.ferra13671.bthack.BThackClient"
+  "entrypoint": "com.ferra13671.bthack.BThackClient",
+  "mixins": "bthack-client.mixins.json"
 }

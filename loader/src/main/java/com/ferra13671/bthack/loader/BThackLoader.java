@@ -11,10 +11,12 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.impl.launch.knot.Knot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.spongepowered.asm.mixin.Mixins;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -59,6 +61,34 @@ public class BThackLoader extends ClientLoader {
             this.clientMetadata = metadata;
             Knot.getLauncher().addToClassPath(metadata.candidate().file().toPath());
             this.entrypoint = (ClientEntrypoint) getClass().getClassLoader().loadClass(metadata.entrypointPath()).getDeclaredConstructor().newInstance();
+        }
+
+        applyMixins(List.of(this.clientMetadata.mixinsPath()));
+    }
+
+    @SneakyThrows
+    private void applyMixins(List<String> mixinPaths) {
+        for (String mixin : mixinPaths)
+            Mixins.addConfiguration(mixin);
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        Field delegateField = classLoader.getClass().getDeclaredField("delegate");
+        delegateField.setAccessible(true);
+        Object delegate = delegateField.get(classLoader);
+
+        Field mixinTransformerField = delegate.getClass().getDeclaredField("mixinTransformer");
+        mixinTransformerField.setAccessible(true);
+
+        Object mixinTransformer = mixinTransformerField.get(delegate);
+        if (mixinTransformer.getClass().getName().equals("spongepowered")) {
+            Field processorField = mixinTransformer.getClass().getDeclaredField("processor");
+            processorField.setAccessible(true);
+
+            Object processor = processorField.get(mixinTransformer);
+
+            Field transformedCountField = processor.getClass().getDeclaredField("transformedCount");
+            transformedCountField.setAccessible(true);
+            transformedCountField.setInt(processor, 0);
         }
     }
 

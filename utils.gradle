@@ -18,8 +18,7 @@ configurations {
 
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.officialMojangMappings()
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     compileOnly("org.projectlombok:lombok:${project.lombok_version}")
     annotationProcessor("org.projectlombok:lombok:${project.lombok_version}")
@@ -29,7 +28,6 @@ shadowJar {
     configurations = [project.configurations.shadow]
 }
 
-remapJar {
+jar {
     dependsOn shadowJar
-    inputFile.set(shadowJar.archiveFile)
 }
