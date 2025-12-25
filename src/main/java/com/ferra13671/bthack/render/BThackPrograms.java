@@ -6,10 +6,10 @@ import com.ferra13671.cometrenderer.program.shader.ShaderType;
 
 public class BThackPrograms {
 
-    public final GlProgram position = CometLoaders.IN_JAR.createProgramBuilder(
+    public final GlProgram POSITION = CometLoaders.IN_JAR.createProgramBuilder(
     )
             .name("position")
-            .shader(BThackRenderSystem.SHADER_ENTRIES.positionVertex, ShaderType.Vertex)
-            .shader(BThackRenderSystem.SHADER_ENTRIES.positionFragment, ShaderType.Fragment)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_FRAGMENT, ShaderType.Fragment)
             .build();
 }
