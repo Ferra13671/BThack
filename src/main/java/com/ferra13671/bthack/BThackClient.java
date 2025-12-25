@@ -3,16 +3,22 @@ package com.ferra13671.bthack;
 import com.ferra13671.MegaEvents.eventbus.IEventBus;
 import com.ferra13671.MegaEvents.eventbus.impl.EventBus;
 import com.ferra13671.bthack.features.category.BThackCategory;
-import com.ferra13671.bthack.features.category.CategoryManager;
+import com.ferra13671.bthack.managers.CategoryManager;
 import com.ferra13671.bthack.features.module.Modules;
 import com.ferra13671.bthack.init.InitStage;
 import com.ferra13671.bthack.loader.api.ClientEntrypoint;
 import com.ferra13671.bthack.loader.api.ClientLoader;
+import com.ferra13671.bthack.managers.bind.Bind;
+import com.ferra13671.bthack.managers.bind.BindController;
+import com.ferra13671.bthack.managers.bind.BindManager;
+import com.ferra13671.bthack.managers.bind.BindType;
+import com.ferra13671.bthack.utils.Mc;
 import lombok.Getter;
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class BThackClient implements ClientEntrypoint {
+public class BThackClient implements ClientEntrypoint, Mc {
     @Getter
     private static BThackClient INSTANCE;
     @Getter
@@ -23,6 +29,8 @@ public class BThackClient implements ClientEntrypoint {
     private final InitStage initProvider = InitStage.of("BThack init provider");
     @Getter
     private CategoryManager categoryManager;
+    @Getter
+    private BindManager bindManager;
 
     @Override
     public void preLaunch() {
@@ -31,6 +39,10 @@ public class BThackClient implements ClientEntrypoint {
         long startInitTime = System.currentTimeMillis();
 
         this.logger.info("Register main task provider stages...");
+
+        this.initProvider.setChangeSubStageConsumer(nextStage ->
+            this.logger.info("Stage -> {}", nextStage.getName())
+        );
         this.initProvider.registerLast(InitStage.of("Init categories", () -> {
             this.categoryManager = new CategoryManager();
 
@@ -40,11 +52,17 @@ public class BThackClient implements ClientEntrypoint {
             this.categoryManager.register(new BThackCategory("Movement", "movement", null));
             this.categoryManager.register(new BThackCategory("Misc", "misc", null));
         }));
-        this.initProvider.registerLast(InitStage.of("Init modules", () ->
+        this.initProvider.registerLast(InitStage.of("Init modules", () -> {
+            this.bindManager = new BindManager();
+            this.eventBus.register(this.bindManager);
+
             Modules.getModules().forEach(module ->
-                this.categoryManager.registerModule(module)
-            )
-        ));
+                    this.categoryManager.registerModule(module)
+            );
+
+            //TODO remove later
+            Modules.test.setBind(new Bind(GLFW.GLFW_KEY_K, BindType.Toggle, BindController.Keyboard));
+        }));
 
         this.logger.info("BThack preLaunch initialization completed in {} ms.", System.currentTimeMillis() - startInitTime);
     }
@@ -57,5 +75,9 @@ public class BThackClient implements ClientEntrypoint {
         this.initProvider.start();
 
         this.logger.info("BThack main initialization completed in {} ms.", System.currentTimeMillis() - startInitTime);
+    }
+
+    public static boolean nullCheck() {
+        return mc.player == null || mc.level == null;
     }
 }

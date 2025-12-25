@@ -1,13 +1,17 @@
 package com.ferra13671.bthack.init;
 
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public abstract class InitStage implements IInitStage {
     private final List<IInitStage> subStages = new ArrayList<>();
     private final String name;
+    @Setter
+    private Consumer<IInitStage> changeSubStageConsumer = _ -> {};
     @Getter
     private IInitStage currentSubStage = null;
     private boolean finished = false;
@@ -41,6 +45,7 @@ public abstract class InitStage implements IInitStage {
 
         for (IInitStage stage : this.subStages) {
             this.currentSubStage = stage;
+            this.changeSubStageConsumer.accept(this.currentSubStage);
             this.currentSubStage.start();
         }
 

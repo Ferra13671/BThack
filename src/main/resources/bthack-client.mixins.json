@@ -6,6 +6,9 @@
   "mixins": [
   ],
   "client": [
+    "KeyboardHandlerMixin",
+    "MinecraftMixin",
+    "MouseHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

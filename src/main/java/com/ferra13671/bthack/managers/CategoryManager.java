@@ -1,6 +1,7 @@
-package com.ferra13671.bthack.features.category;
+package com.ferra13671.bthack.managers;
 
 import com.ferra13671.bthack.BThackClient;
+import com.ferra13671.bthack.features.category.ICategory;
 import com.ferra13671.bthack.features.module.IModule;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ public class CategoryManager {
     private final HashMap<ICategory, List<IModule>> modules = new HashMap<>();
 
     public <T extends ICategory> T register(T category) {
-        this.categories.put(category.getName(), category);
+        this.categories.put(category.getId(), category);
         return category;
     }
 
