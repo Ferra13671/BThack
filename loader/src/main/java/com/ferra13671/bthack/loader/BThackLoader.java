@@ -47,7 +47,6 @@ public class BThackLoader extends ClientLoader {
         this.logger.info(String.format("BThack was loaded successfully in %s ms.", this.initTime - startLoadTime));
     }
 
-    //TODO loading mixins
     @SneakyThrows
     private void loadEntrypoint() {
         if (isDevelopmentEnvironment()) {

@@ -9,7 +9,7 @@
     "repo": ""
   },
   "license": "MIT",
-  "icon": "",
+  "icon": "bthack-client.png",
   "environment": "*",
   "entrypoints": {
     "preLaunch": [
