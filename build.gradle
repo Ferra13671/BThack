@@ -7,15 +7,24 @@ plugins {
 apply from: file("utils.gradle")
 version = '1.0-beta'
 
-dependencies {
-    implementation "com.ferra13671:comet-renderer:${project.comet_renderer_version}-HOTFIX-2"
-    implementation "com.ferra13671:gl-texture-utils:1.7.1"
+void libraries(Object... libraries) {
+    for (Object lib : libraries)
+        dependencies {
+            library lib
+        }
+}
 
-    //Plugins (optional)
-    implementation "com.ferra13671:comet-renderer-minecraft:26.1-snapshot-1-fabric-${project.comet_renderer_version}"
-    implementation "com.ferra13671:comet-renderer-better-exceptions:2.0"
-    implementation "com.ferra13671:comet-renderer-post-effects:2.0"
-    implementation "com.ferra13671:comet-renderer-shader-libraries:2.0"
+dependencies {
+
+    libraries(
+            "com.ferra13671:comet-renderer:${project.comet_renderer_version}-HOTFIX-2",
+            "com.ferra13671:comet-renderer-minecraft:26.1-snapshot-1-fabric-${project.comet_renderer_version}",
+            "com.ferra13671:comet-renderer-better-exceptions:${project.comet_renderer_version}",
+            "com.ferra13671:comet-renderer-post-effects:${project.comet_renderer_version}",
+            "com.ferra13671:comet-renderer-shader-libraries:${project.comet_renderer_version}",
+            "com.ferra13671:gl-texture-utils:${project.gl_texture_utils_version}",
+            "com.ferra13671:mega-events:${project.mega_events_version}"
+    )
 
     implementation project("loader-api")
 }

@@ -37,6 +37,8 @@ public abstract class InitStage implements IInitStage {
     public final void start() {
         assertFinished();
 
+        run();
+
         for (IInitStage stage : this.subStages) {
             this.currentSubStage = stage;
             this.currentSubStage.start();
