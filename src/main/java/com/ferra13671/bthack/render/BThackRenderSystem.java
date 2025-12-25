@@ -20,6 +20,7 @@ public class BThackRenderSystem implements Mc {
     private static CachedOrthoProjectionMatrixBuffer matrix;
     public static BThackShaderEntries SHADER_ENTRIES;
     public static BThackPrograms PROGRAMS;
+    public static BThackTextures TEXTURES;
 
     public static InitStageImpl createInitStage() {
         InitStageImpl initStage = InitStageImpl.of("Init Renderer", () -> matrix = new CachedOrthoProjectionMatrixBuffer("bthack-client-projection-matrix", -1000, 1000, true));
@@ -32,6 +33,7 @@ public class BThackRenderSystem implements Mc {
         initStage.registerLast(InitStageImpl.of("Load shader libraries", BThackRenderSystem::loadShaderLibraries));
         initStage.registerLast(InitStageImpl.of("Load shader entries", () -> SHADER_ENTRIES = new BThackShaderEntries()));
         initStage.registerLast(InitStageImpl.of("Compile shaders", () -> PROGRAMS = new BThackPrograms()));
+        initStage.registerLast(InitStageImpl.of("Load textures", () -> TEXTURES = new BThackTextures()));
 
         return initStage;
     }

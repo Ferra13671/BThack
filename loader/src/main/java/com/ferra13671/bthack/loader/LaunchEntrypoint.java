@@ -2,7 +2,6 @@ package com.ferra13671.bthack.loader;
 
 import com.ferra13671.bthack.loader.api.ClientLoader;
 import lombok.SneakyThrows;
-import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 
 public class LaunchEntrypoint implements PreLaunchEntrypoint {
