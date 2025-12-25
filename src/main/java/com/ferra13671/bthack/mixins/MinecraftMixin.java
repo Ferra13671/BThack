@@ -13,6 +13,6 @@ public class MinecraftMixin {
 
     @Inject(method = "tick", at = @At("HEAD"))
     public void modifyTick(CallbackInfo ci) {
-        BThackClient.getINSTANCE().getEventBus().activate(new TickEvent());
+        BThackClient.getInstance().getEventBus().activate(new TickEvent());
     }
 }

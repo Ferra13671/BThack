@@ -14,11 +14,11 @@
   "entrypoints": {
     "preLaunch": [
       "com.ferra13671.bthack.loader.LaunchEntrypoint"
-    ],
-    "client": [
-      "com.ferra13671.bthack.loader.LaunchEntrypoint"
     ]
   },
+  "mixins": [
+    "bthack-loader.mixins.json"
+  ],
   "depends": {
     "fabricloader": ">=0.18.3",
     "minecraft": "26.1-alpha.1"

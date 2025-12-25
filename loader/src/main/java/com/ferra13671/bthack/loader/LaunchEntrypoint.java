@@ -5,7 +5,7 @@ import lombok.SneakyThrows;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.loader.api.entrypoint.PreLaunchEntrypoint;
 
-public class LaunchEntrypoint implements PreLaunchEntrypoint, ClientModInitializer {
+public class LaunchEntrypoint implements PreLaunchEntrypoint {
 
     @Override
     @SneakyThrows
@@ -17,9 +17,8 @@ public class LaunchEntrypoint implements PreLaunchEntrypoint, ClientModInitializ
         loader.getClientEntrypoint().preLaunch();
     }
 
-    @Override
     @SneakyThrows
-    public void onInitializeClient() {
+    public static void onInitializeMain() {
         ClientLoader.getInstance().getClientEntrypoint().init();
     }
 }

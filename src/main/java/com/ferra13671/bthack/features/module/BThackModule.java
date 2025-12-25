@@ -8,7 +8,7 @@ import com.ferra13671.bthack.managers.bind.BindListener;
 public class BThackModule implements IModule {
     private final ModuleInfo annotation = getClass().getAnnotation(ModuleInfo.class);
     private final String name = this.annotation.name();
-    private final ICategory category = BThackClient.getINSTANCE().getCategoryManager().getCategory(this.annotation.category());
+    private final ICategory category = BThackClient.getInstance().getCategoryManager().getCategory(this.annotation.category());
     private final String id;
     private final String descriptionId;
 
@@ -44,11 +44,11 @@ public class BThackModule implements IModule {
     @Override
     public void setBind(Bind bind) {
         if (this.bindListener != null)
-            BThackClient.getINSTANCE().getBindManager().unregister(this.bindListener);
+            BThackClient.getInstance().getBindManager().unregister(this.bindListener);
 
         this.bind = bind;
         this.bindListener = new BindListener(this.bind, this::setEnabled, () -> this.enabled);
-        BThackClient.getINSTANCE().getBindManager().register(this.bindListener);
+        BThackClient.getInstance().getBindManager().register(this.bindListener);
     }
 
     @Override
@@ -69,11 +69,11 @@ public class BThackModule implements IModule {
     }
 
     public void onEnable() {
-        BThackClient.getINSTANCE().getEventBus().register(this);
+        BThackClient.getInstance().getEventBus().register(this);
     }
 
     public void onDisable() {
-        BThackClient.getINSTANCE().getEventBus().unregister(this);
+        BThackClient.getInstance().getEventBus().unregister(this);
     }
 
     @Override

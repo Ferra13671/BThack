@@ -11,6 +11,6 @@ public class TestModule extends BThackModule {
 
     @EventSubscriber(event = TickEvent.class)
     public void onTick() {
-        BThackClient.getINSTANCE().getLogger().info("Test module passed!");
+        BThackClient.getInstance().getLogger().info("Test module passed!");
     }
 }

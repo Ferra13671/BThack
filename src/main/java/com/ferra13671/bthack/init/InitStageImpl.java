@@ -1,35 +1,28 @@
 package com.ferra13671.bthack.init;
 
+import com.ferra13671.bthack.BThackClient;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
-public abstract class InitStage implements IInitStage {
-    private final List<IInitStage> subStages = new ArrayList<>();
-    private final String name;
-    @Setter
-    private Consumer<IInitStage> changeSubStageConsumer = _ -> {};
+public class InitStageImpl extends AbstractInitStage {
+    protected final List<AbstractInitStage> subStages = new ArrayList<>();
+    protected final String name;
     @Getter
-    private IInitStage currentSubStage = null;
-    private boolean finished = false;
+    protected AbstractInitStage currentSubStage = null;
+    protected boolean finished = false;
 
-    protected InitStage(String name) {
+    protected InitStageImpl(String name) {
         this.name = name;
     }
 
-    public static InitStage of(String name) {
-        return new InitStage(name) {
-            @Override
-            public void run() {
-            }
-        };
+    public static InitStageImpl of(String name) {
+        return new InitStageImpl(name);
     }
 
-    public static InitStage of(String name, Runnable runnable) {
-        return new InitStage(name) {
+    public static InitStageImpl of(String name, Runnable runnable) {
+        return new InitStageImpl(name) {
             @Override
             public void run() {
                 runnable.run();
@@ -41,37 +34,55 @@ public abstract class InitStage implements IInitStage {
     public final void start() {
         assertFinished();
 
+        BThackClient.getInstance().getLogger().info("Invoking stage:".concat(getStageTree()));
+
         run();
 
-        for (IInitStage stage : this.subStages) {
+        for (AbstractInitStage stage : this.subStages) {
             this.currentSubStage = stage;
-            this.changeSubStageConsumer.accept(this.currentSubStage);
             this.currentSubStage.start();
         }
 
         this.finished = true;
     }
 
-    public abstract void run();
+    public void run() {}
 
     @Override
-    public IInitStage registerFirst(IInitStage stage) {
+    public boolean isFinished() {
+        return this.finished;
+    }
+
+    @Override
+    public String getName() {
+        return this.name;
+    }
+
+    @Override
+    public String getStageTree() {
+        return (this.parentStage == null ? "" : this.parentStage.getStageTree()).concat(" -> ").concat(getName());
+    }
+
+    @Override
+    public AbstractInitStage registerFirst(AbstractInitStage stage) {
         assertFinished();
 
         this.subStages.addFirst(stage);
+        stage.parentStage = this;
         return stage;
     }
 
     @Override
-    public IInitStage registerLast(IInitStage stage) {
+    public AbstractInitStage registerLast(AbstractInitStage stage) {
         assertFinished();
 
         this.subStages.addLast(stage);
+        stage.parentStage = this;
         return stage;
     }
 
     @Override
-    public IInitStage registerBefore(String requiredStage, IInitStage stage) {
+    public AbstractInitStage registerBefore(String requiredStage, AbstractInitStage stage) {
         assertFinished();
 
         int requiredStagePos = findInternal(requiredStage);
@@ -83,7 +94,7 @@ public abstract class InitStage implements IInitStage {
     }
 
     @Override
-    public IInitStage registerAfter(String requiredStage, IInitStage stage) {
+    public AbstractInitStage registerAfter(String requiredStage, AbstractInitStage stage) {
         assertFinished();
 
         int requiredStagePos = findInternal(requiredStage);
@@ -95,16 +106,17 @@ public abstract class InitStage implements IInitStage {
     }
 
     @Override
-    public IInitStage registerAt(int pos, IInitStage stage) {
+    public AbstractInitStage registerAt(int pos, AbstractInitStage stage) {
         if (pos < 0 || pos > this.subStages.size() - 1)
             throw new IllegalStateException(String.format("position(%s) must be between %s and %s", pos, 0, this.subStages.size() - 1));
 
         this.subStages.add(pos, stage);
+        stage.parentStage = this;
         return stage;
     }
 
     @Override
-    public IInitStage find(String name) {
+    public AbstractInitStage find(String name) {
         int stagePos = findInternal(name);
 
         return stagePos == -1 ? null : this.subStages.get(stagePos);
@@ -112,7 +124,7 @@ public abstract class InitStage implements IInitStage {
 
     private int findInternal(String name) {
         for (int i = 0; i < this.subStages.size(); i++) {
-            IInitStage stage = this.subStages.get(i);
+            AbstractInitStage stage = this.subStages.get(i);
             if (stage.getName().equals(name))
                 return i;
         }
@@ -123,15 +135,5 @@ public abstract class InitStage implements IInitStage {
     private void assertFinished() {
         if (isFinished())
             throw new IllegalStateException("InitProvider has finished initializing");
-    }
-
-    @Override
-    public boolean isFinished() {
-        return this.finished;
-    }
-
-    @Override
-    public String getName() {
-        return this.name;
     }
 }

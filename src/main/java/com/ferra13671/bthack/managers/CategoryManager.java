@@ -32,7 +32,7 @@ public class CategoryManager {
 
     public <T extends IModule> T registerModule(T module) {
         if (!this.categories.containsValue(module.getCategory()))
-            BThackClient.getINSTANCE().getLogger().error("Category '{}', which is used in module '{}', was not registered in category manager.", module.getCategory().getId(), module.getId());
+            BThackClient.getInstance().getLogger().error("Category '{}', which is used in module '{}', was not registered in category manager.", module.getCategory().getId(), module.getId());
 
         this.modules.computeIfAbsent(module.getCategory(), _ -> new ArrayList<>()).add(module);
 
@@ -45,7 +45,7 @@ public class CategoryManager {
 
     public IModule getModule(ICategory category, String id) {
         if (!this.categories.containsValue(category))
-            BThackClient.getINSTANCE().getLogger().error("Category '{}' was not registered in category manager", category);
+            BThackClient.getInstance().getLogger().error("Category '{}' was not registered in category manager", category);
 
         for (IModule module : this.modules.computeIfAbsent(category, _ -> new ArrayList<>()))
             if (module.getId().equals(id))

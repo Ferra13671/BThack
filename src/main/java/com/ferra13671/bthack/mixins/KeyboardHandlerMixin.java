@@ -16,6 +16,6 @@ public class KeyboardHandlerMixin {
     @Inject(method = "keyPress", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/FramerateLimitTracker;onInputReceived()V", shift = At.Shift.AFTER))
     public void modifyKeyPress(long handle, int action, KeyEvent event, CallbackInfo ci) {
         if (action == 0 || action == 1)
-            BThackClient.getINSTANCE().getEventBus().activate(new KeyInputEvent(event.key(), action == 1 ? KeyAction.Press : KeyAction.Release));
+            BThackClient.getInstance().getEventBus().activate(new KeyInputEvent(event.key(), action == 1 ? KeyAction.Press : KeyAction.Release));
     }
 }

@@ -16,6 +16,6 @@ public class MouseHandlerMixin {
     @Inject(method = "onButton", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/FramerateLimitTracker;onInputReceived()V", shift = At.Shift.AFTER))
     public void modifyOnButton(long handle, MouseButtonInfo rawButtonInfo, int action, CallbackInfo ci) {
         if (action == 0 || action == 1)
-            BThackClient.getINSTANCE().getEventBus().activate(new MouseInputEvent(rawButtonInfo.button(), action == 1 ? KeyAction.Press : KeyAction.Release));
+            BThackClient.getInstance().getEventBus().activate(new MouseInputEvent(rawButtonInfo.button(), action == 1 ? KeyAction.Press : KeyAction.Release));
     }
 }
