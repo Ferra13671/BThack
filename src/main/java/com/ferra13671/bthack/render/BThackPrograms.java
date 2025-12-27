@@ -6,10 +6,29 @@ import com.ferra13671.cometrenderer.program.shader.ShaderType;
 
 public class BThackPrograms {
 
-    public final GlProgram POSITION = CometLoaders.IN_JAR.createProgramBuilder(
-    )
+    public final GlProgram POSITION = CometLoaders.IN_JAR.createProgramBuilder()
             .name("position")
             .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_VERTEX, ShaderType.Vertex)
             .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_FRAGMENT, ShaderType.Fragment)
+            .build();
+
+    public final GlProgram POSITION_COLOR = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("position-color")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_COLOR_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_COLOR_FRAGMENT, ShaderType.Fragment)
+            .build();
+
+    public final GlProgram TEXTURE = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("texture")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.TEXTURE_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.TEXTURE_FRAGMENT, ShaderType.Fragment)
+            .sampler("u_Texture")
+            .build();
+
+    public final GlProgram TEXTURE_COLOR = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("texture-color")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.TEXTURE_COLOR_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.TEXTURE_COLOR_FRAGMENT, ShaderType.Fragment)
+            .sampler("u_Texture")
             .build();
 }

@@ -10,8 +10,7 @@
     "IGlBuffer",
     "KeyboardHandlerMixin",
     "MinecraftMixin",
-    "MouseHandlerMixin",
-    "RenderSystemMixin"
+    "MouseHandlerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

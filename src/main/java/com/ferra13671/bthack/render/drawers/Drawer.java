@@ -7,11 +7,13 @@ import java.io.Closeable;
 
 public abstract class Drawer implements Closeable {
     protected final MeshBuilder meshBuilder;
+    protected final Runnable preDrawRunnable;
     protected Mesh mesh = null;
     private boolean finished = false;
     private boolean closed = false;
 
-    public Drawer(MeshBuilder meshBuilder) {
+    public Drawer(Runnable preDrawRunnable, MeshBuilder meshBuilder) {
+        this.preDrawRunnable = preDrawRunnable;
         this.meshBuilder = meshBuilder;
     }
 
@@ -40,8 +42,11 @@ public abstract class Drawer implements Closeable {
         assertFinished();
         assertNotClosed();
 
-        if (this.mesh != null)
+        if (this.mesh != null) {
+            if (this.preDrawRunnable != null)
+                this.preDrawRunnable.run();
             draw();
+        }
 
         return this;
     }

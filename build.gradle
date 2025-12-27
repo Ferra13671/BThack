@@ -17,7 +17,7 @@ void libraries(Object... libraries) {
 dependencies {
 
     libraries(
-            "com.ferra13671:comet-renderer:${project.comet_renderer_version}-HOTFIX-2",
+            "com.ferra13671:comet-renderer:${project.comet_renderer_version}",
             "com.ferra13671:comet-renderer-minecraft:26.1-snapshot-1-fabric-${project.comet_renderer_version}",
             "com.ferra13671:comet-renderer-better-exceptions:${project.comet_renderer_version}",
             "com.ferra13671:comet-renderer-post-effects:${project.comet_renderer_version}",

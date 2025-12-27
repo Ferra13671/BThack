@@ -1,9 +1,6 @@
 package com.ferra13671.bthack.render;
 
-import com.ferra13671.gltextureutils.GLTexture;
-import com.ferra13671.gltextureutils.PathMode;
-import com.ferra13671.gltextureutils.TextureFiltering;
-import com.ferra13671.gltextureutils.TextureWrapping;
+import com.ferra13671.gltextureutils.*;
 import com.ferra13671.gltextureutils.loader.FileEntry;
 import com.ferra13671.gltextureutils.loader.TextureLoaders;
 

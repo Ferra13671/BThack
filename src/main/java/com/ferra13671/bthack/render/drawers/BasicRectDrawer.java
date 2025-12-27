@@ -1,7 +1,6 @@
 package com.ferra13671.bthack.render.drawers;
 
 import com.ferra13671.bthack.render.BThackRenderSystem;
-import com.ferra13671.bthack.render.RenderColor;
 import com.ferra13671.cometrenderer.CometRenderer;
 import com.ferra13671.cometrenderer.CometVertexFormats;
 import com.ferra13671.cometrenderer.plugins.minecraft.MinecraftPlugin;
@@ -9,15 +8,13 @@ import com.ferra13671.cometrenderer.vertex.DrawMode;
 import com.ferra13671.cometrenderer.vertex.mesh.Mesh;
 
 public class BasicRectDrawer extends Drawer {
-    private RenderColor color;
-
-    public BasicRectDrawer(RenderColor color) {
-        this.color = color;
-        this();
-    }
 
     public BasicRectDrawer() {
-        super(Mesh.builder(DrawMode.QUADS, CometVertexFormats.POSITION));
+        this(null);
+    }
+
+    public BasicRectDrawer(Runnable preDrawRunnable) {
+        super(preDrawRunnable, Mesh.builder(DrawMode.QUADS, CometVertexFormats.POSITION));
     }
 
     public BasicRectDrawer rectSized(float x, float y, float width, float height) {
@@ -37,8 +34,6 @@ public class BasicRectDrawer extends Drawer {
     protected void draw() {
         CometRenderer.setGlobalProgram(BThackRenderSystem.PROGRAMS.POSITION);
 
-        if (this.color != null)
-            CometRenderer.setShaderColor(this.color.toVector4f());
         CometRenderer.initShaderColor();
         MinecraftPlugin.initMatrix();
 

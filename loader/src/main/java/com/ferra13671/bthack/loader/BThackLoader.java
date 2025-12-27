@@ -17,7 +17,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Field;
+import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,8 +45,18 @@ public class BThackLoader extends ClientLoader {
         checkIsDevelopmentEnvironment();
         loadEntrypoint();
 
+        tryLoadRenderDoc();
+
         this.initTime = System.currentTimeMillis();
-        this.logger.info(String.format("BThack was loaded successfully in %s ms.", this.initTime - startLoadTime));
+        this.logger.info("BThack was loaded successfully in {} ms.", this.initTime - startLoadTime);
+    }
+
+    private void tryLoadRenderDoc() {
+        Path renderDocPath = Paths.get("renderdoc.dll").toAbsolutePath();
+        if (Files.exists(renderDocPath)) {
+            System.load(renderDocPath.toString());
+            this.logger.info("Loaded RenderDoc from file: {}", renderDocPath);
+        }
     }
 
     @SneakyThrows

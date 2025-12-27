@@ -6,6 +6,7 @@ repositories {
         url = 'https://ferra13671.github.io/maven/'
     }
     mavenCentral()
+    mavenLocal()
 }
 
 configurations {
