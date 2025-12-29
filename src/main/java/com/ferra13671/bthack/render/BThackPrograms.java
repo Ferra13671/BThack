@@ -3,6 +3,7 @@ package com.ferra13671.bthack.render;
 import com.ferra13671.cometrenderer.CometLoaders;
 import com.ferra13671.cometrenderer.program.GlProgram;
 import com.ferra13671.cometrenderer.program.shader.ShaderType;
+import com.ferra13671.cometrenderer.program.uniform.UniformType;
 
 public class BThackPrograms {
 
@@ -16,6 +17,13 @@ public class BThackPrograms {
             .name("position-color")
             .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_COLOR_VERTEX, ShaderType.Vertex)
             .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_COLOR_FRAGMENT, ShaderType.Fragment)
+            .build();
+
+    public final GlProgram ROUNDED = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("rounded")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_FRAGMENT, ShaderType.Fragment)
+            .uniform("resolution", UniformType.VEC2)
             .build();
 
     public final GlProgram TEXTURE = CometLoaders.IN_JAR.createProgramBuilder()
