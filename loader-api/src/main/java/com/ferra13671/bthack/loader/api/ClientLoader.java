@@ -1,6 +1,7 @@
 package com.ferra13671.bthack.loader.api;
 
 import java.io.File;
+import java.io.InputStream;
 
 public abstract class ClientLoader {
     private static ClientLoader instance = null;
@@ -21,5 +22,9 @@ public abstract class ClientLoader {
 
     public static ClientLoader getInstance() {
         return instance;
+    }
+
+    public static InputStream getResource(ResourcePath path) {
+        return ClientLoader.class.getClassLoader().getResourceAsStream("assets/".concat(path.namespace()).concat("/").concat(path.path()));
     }
 }

@@ -10,10 +10,19 @@ import java.awt.*;
 @AllArgsConstructor
 @Getter
 public class RenderColor {
-    public static RenderColor WHITE = RenderColor.of(-1);
+    public static RenderColor WHITE = RenderColor.ofRGBA(-1);
     public static RenderColor BLACK = RenderColor.of(0, 0, 0, 255);
 
     private float[] color;
+
+    public RenderColor multiply(RenderColor renderColor) {
+        return RenderColor.of(
+                this.color[0] * renderColor.getColor()[0],
+                this.color[1] * renderColor.getColor()[1],
+                this.color[2] * renderColor.getColor()[2],
+                this.color[3] * renderColor.getColor()[3]
+        );
+    }
 
     public Vector4f toVector4f() {
         return new Vector4f(this.color[0], this.color[1], this.color[2], this.color[3]);
@@ -31,7 +40,11 @@ public class RenderColor {
         return new RenderColor(new float[]{red, green, blue, alpha});
     }
 
-    public static RenderColor of(int rgba) {
+    public static RenderColor ofRGBA(int rgba) {
         return new RenderColor(new float[]{ARGB.redFloat(rgba), ARGB.greenFloat(rgba), ARGB.blueFloat(rgba), ARGB.alphaFloat(rgba)});
+    }
+
+    public static RenderColor ofRGB(int rgb) {
+        return new RenderColor(new float[]{ARGB.redFloat(rgb), ARGB.greenFloat(rgb), ARGB.blueFloat(rgb), 1f});
     }
 }

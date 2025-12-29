@@ -5,19 +5,27 @@ import lombok.Getter;
 
 @Getter
 public class RenderText {
-    private String text;
+    private FormattedText text;
     private float x;
     private float y;
     private RenderColor color = RenderColor.WHITE;
     private boolean shadow = false;
 
-    public RenderText(String text, float x, float y) {
+    public RenderText(String s, float x, float y) {
+        this(new FormattedText(s), x, y);
+    }
+
+    public RenderText(FormattedText text, float x, float y) {
         this.text = text;
         this.x = x;
         this.y = y;
     }
 
-    public RenderText withText(String text) {
+    public RenderText withText(String s) {
+        return withText(new FormattedText(s));
+    }
+
+    public RenderText withText(FormattedText text) {
         this.text = text;
         return this;
     }
