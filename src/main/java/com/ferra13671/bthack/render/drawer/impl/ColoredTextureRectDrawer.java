@@ -3,8 +3,9 @@ package com.ferra13671.bthack.render.drawer.impl;
 import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.render.RectColors;
 import com.ferra13671.bthack.render.drawer.SimpleDrawer;
+import com.ferra13671.bthack.render.vertex.BThackVertexElementTypes;
+import com.ferra13671.bthack.render.vertex.BThackVertexFormats;
 import com.ferra13671.cometrenderer.CometRenderer;
-import com.ferra13671.cometrenderer.CometVertexFormats;
 import com.ferra13671.cometrenderer.plugins.minecraft.MinecraftPlugin;
 import com.ferra13671.cometrenderer.vertex.DrawMode;
 import com.ferra13671.cometrenderer.vertex.element.VertexElementType;
@@ -21,7 +22,7 @@ public class ColoredTextureRectDrawer extends SimpleDrawer {
     }
 
     public ColoredTextureRectDrawer(Runnable preDrawRunnable) {
-        super(preDrawRunnable, Mesh.builder(DrawMode.QUADS, CometVertexFormats.POSITION_TEXTURE_COLOR));
+        super(preDrawRunnable, Mesh.builder(DrawMode.QUADS, BThackVertexFormats.POSITION_TEXTURE_COLOR));
     }
 
     public ColoredTextureRectDrawer rectSized(float x, float y, float width, float height, RectColors rectColors) {
@@ -39,16 +40,16 @@ public class ColoredTextureRectDrawer extends SimpleDrawer {
     public ColoredTextureRectDrawer rectPositioned(float x1, float y1, float x2, float y2, float u1, float v1, float u2, float v2, RectColors rectColors) {
         this.meshBuilder.vertex(x1, y1, 0)
                 .element("Texture", VertexElementType.FLOAT, u1, v1)
-                .element("Color", VertexElementType.FLOAT, rectColors.x1y1Color()[0], rectColors.x1y1Color()[1], rectColors.x1y1Color()[2], rectColors.x1y1Color()[3]);
+                .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y1Color());
         this.meshBuilder.vertex(x1, y2, 0)
                 .element("Texture", VertexElementType.FLOAT, u1, v2)
-                .element("Color", VertexElementType.FLOAT, rectColors.x1y2Color()[0], rectColors.x1y2Color()[1], rectColors.x1y2Color()[2], rectColors.x1y2Color()[3]);
+                .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y2Color());
         this.meshBuilder.vertex(x2, y2, 0)
                 .element("Texture", VertexElementType.FLOAT, u2, v2)
-                .element("Color", VertexElementType.FLOAT, rectColors.x2y2Color()[0], rectColors.x2y2Color()[1], rectColors.x2y2Color()[2], rectColors.x2y2Color()[3]);
+                .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y2Color());
         this.meshBuilder.vertex(x2, y1, 0)
                 .element("Texture", VertexElementType.FLOAT, u2, v1)
-                .element("Color", VertexElementType.FLOAT, rectColors.x2y1Color()[0], rectColors.x2y1Color()[1], rectColors.x2y1Color()[2], rectColors.x2y1Color()[3]);
+                .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y1Color());
 
         return this;
     }

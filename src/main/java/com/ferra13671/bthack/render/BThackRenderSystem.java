@@ -1,8 +1,11 @@
 package com.ferra13671.bthack.render;
 
 import com.ferra13671.bthack.init.InitStageImpl;
+import com.ferra13671.bthack.loader.api.ClientLoader;
+import com.ferra13671.bthack.loader.api.ResourcePath;
 import com.ferra13671.bthack.mixins.IGlBuffer;
 import com.ferra13671.bthack.utils.Mc;
+import com.ferra13671.cometrenderer.CometLoader;
 import com.ferra13671.cometrenderer.CometRenderer;
 import com.ferra13671.cometrenderer.plugins.betterexceptions.BetterExceptionsPlugin;
 import com.ferra13671.cometrenderer.plugins.minecraft.MinecraftPlugin;
@@ -11,12 +14,26 @@ import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.renderer.CachedOrthoProjectionMatrixBuffer;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.stream.Collectors;
 
 public class BThackRenderSystem implements Mc {
     private static final List<Runnable> queueCalls = new CopyOnWriteArrayList<>();
     private static CachedOrthoProjectionMatrixBuffer matrix;
+    public static final CometLoader<ResourcePath> COMET_LOADER = new CometLoader<>() {
+        @Override
+        public String load(ResourcePath path) throws Exception {
+            InputStream inputStream = ClientLoader.getResource(path);
+            String content = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
+            inputStream.close();
+            return content;
+        }
+    };
     public static BThackShaderEntries SHADER_ENTRIES;
     public static BThackPrograms PROGRAMS;
     public static BThackTextures TEXTURES;
@@ -48,6 +65,7 @@ public class BThackRenderSystem implements Mc {
 
         ShaderLibrariesPlugin.registerShaderLibraries(
                 BThackShaderLibraries.MATRICES,
+                BThackShaderLibraries.ROUNDED,
                 BThackShaderLibraries.SHADER_COLOR
         );
     }
