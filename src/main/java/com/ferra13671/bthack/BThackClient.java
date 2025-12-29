@@ -23,8 +23,6 @@ public class BThackClient implements ClientEntrypoint, Mc {
     @Getter
     private static BThackClient instance;
     @Getter
-    private static final float clientScale = 2f;
-    @Getter
     private final Logger logger = LoggerFactory.getLogger("BThack");
     @Getter
     private final IEventBus eventBus = new EventBus();

@@ -1,6 +1,5 @@
 package com.ferra13671.bthack.render;
 
-import com.ferra13671.bthack.BThackClient;
 import com.ferra13671.bthack.init.InitStageImpl;
 import com.ferra13671.bthack.mixins.IGlBuffer;
 import com.ferra13671.bthack.utils.Mc;
@@ -39,8 +38,8 @@ public class BThackRenderSystem implements Mc {
     }
 
     public static void prepareProjection() {
-        float width = mc.getWindow().getWidth() / BThackClient.getClientScale();
-        float height = mc.getWindow().getHeight() / BThackClient.getClientScale();
+        float width = mc.getWindow().getWidth();
+        float height = mc.getWindow().getHeight();
 
         RenderSystem.setProjectionMatrix(matrix.getBuffer(width, height), ProjectionType.ORTHOGRAPHIC);
     }

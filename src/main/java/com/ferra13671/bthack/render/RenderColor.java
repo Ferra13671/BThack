@@ -10,6 +10,9 @@ import java.awt.*;
 @AllArgsConstructor
 @Getter
 public class RenderColor {
+    public static RenderColor WHITE = RenderColor.of(-1);
+    public static RenderColor BLACK = RenderColor.of(0, 0, 0, 255);
+
     private float[] color;
 
     public Vector4f toVector4f() {
