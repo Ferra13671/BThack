@@ -55,6 +55,14 @@ public class BThackPrograms {
             .uniform("height", UniformType.FLOAT)
             .build();
 
+    public final GlProgram ROUNDED_BLUR = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("rounded-blur")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_BLUR_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_BLUR_FRAGMENT, ShaderType.Fragment)
+            .sampler("u_Texture")
+            .uniform("height", UniformType.FLOAT)
+            .build();
+
     public final GlProgram BLUR_FRAME = CometLoaders.IN_JAR.createProgramBuilder()
             .name("blur-frame")
             .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_VERTEX, ShaderType.Vertex)

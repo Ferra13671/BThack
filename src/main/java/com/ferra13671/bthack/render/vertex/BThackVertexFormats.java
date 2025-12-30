@@ -32,6 +32,12 @@ public class BThackVertexFormats {
             .element("Radius", VertexElementType.FLOAT, 1)
             .build();
 
+    public VertexFormat ROUNDED_BLUR = VertexFormat.builder()
+            .element("Rect Position", VertexElementType.FLOAT, 2)
+            .element("Half Size", VertexElementType.FLOAT, 2)
+            .element("Radius", VertexElementType.FLOAT, 1)
+            .build();
+
     public VertexFormat ROUNDED_TEXTURE = VertexFormat.builder()
             .element("Texture", VertexElementType.FLOAT, 2)
             .element("Color", BThackVertexElementTypes.RENDER_COLOR, 1)

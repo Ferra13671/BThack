@@ -5,6 +5,7 @@ import com.ferra13671.bthack.events.Render2DEvent;
 import com.ferra13671.bthack.features.module.BThackModule;
 import com.ferra13671.bthack.features.module.ModuleInfo;
 import com.ferra13671.bthack.render.*;
+import com.ferra13671.bthack.render.drawer.impl.RoundedBlurDrawer;
 import com.ferra13671.bthack.render.drawer.impl.RoundedTextureDrawer;
 import com.ferra13671.bthack.utils.Mc;
 
@@ -21,7 +22,12 @@ public class TestModule extends BThackModule implements Mc {
                 .tryDraw()
                 .close();
 
-        //BThackRenderSystem.BLUR_PROVIDER.drawBlur();
+        BThackRenderSystem.BLUR_PROVIDER.drawBlur();
+        new RoundedBlurDrawer()
+                .rectSized(600, 300, 200, 200, 50)
+                .end()
+                .tryDraw()
+                .close();
         //new BlitDrawer(
         //        mc.getWindow().getWidth(),
         //        mc.getWindow().getHeight(),

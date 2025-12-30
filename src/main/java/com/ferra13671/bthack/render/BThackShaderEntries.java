@@ -27,6 +27,9 @@ public class BThackShaderEntries {
     public final GlslFileEntry ROUNDED_TEXTURE_VERTEX = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("rounded-texture.vertex", new ResourcePath("bthack-client", "shaders/impl/rounded-texture.vert"));
     public final GlslFileEntry ROUNDED_TEXTURE_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("rounded-texture.fragment", new ResourcePath("bthack-client", "shaders/impl/rounded-texture.frag"));
 
+    public final GlslFileEntry ROUNDED_BLUR_VERTEX = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("rounded-blur.vertex", new ResourcePath("bthack-client", "shaders/impl/rounded-blur.vert"));
+    public final GlslFileEntry ROUNDED_BLUR_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("rounded-blur.fragment", new ResourcePath("bthack-client", "shaders/impl/rounded-blur.frag"));
+
     public final GlslFileEntry BLUR_FRAME_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("blur-frame.fragment", new ResourcePath("bthack-client", "shaders/impl/blur-frame.frag"));
 
     public final GlslFileEntry BLIT_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("blit.fragment", new ResourcePath("bthack-client", "shaders/impl/blit.frag"));
