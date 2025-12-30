@@ -7,6 +7,7 @@ import com.ferra13671.bthack.features.module.ModuleInfo;
 import com.ferra13671.bthack.render.Fonts;
 import com.ferra13671.bthack.render.RectColors;
 import com.ferra13671.bthack.render.RenderColor;
+import com.ferra13671.bthack.render.drawer.impl.RoundedOutlinedRectDrawer;
 import com.ferra13671.bthack.render.drawer.impl.RoundedRectDrawer;
 import com.ferra13671.bthack.render.drawer.impl.text.RenderText;
 import com.ferra13671.bthack.render.drawer.impl.text.TextDrawer;
@@ -32,6 +33,12 @@ public class TestModule extends BThackModule {
 
         new RoundedRectDrawer()
                 .rectSized(600, 600, 200, 200, 50 * (float) Math.sin(Math.toRadians((System.currentTimeMillis() / 10) % 180)), RectColors.oneColor(RenderColor.WHITE))
+                .end()
+                .tryDraw()
+                .close();
+
+        new RoundedOutlinedRectDrawer()
+                .rectSized(900, 600, 200, 200, 50 * (float) Math.sin(Math.toRadians((System.currentTimeMillis() / 10) % 180)), 20, RectColors.oneColor(RenderColor.WHITE), RectColors.oneColor(RenderColor.BLACK))
                 .end()
                 .tryDraw()
                 .close();

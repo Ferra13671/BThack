@@ -13,21 +13,21 @@ import com.ferra13671.cometrenderer.vertex.DrawMode;
 import com.ferra13671.cometrenderer.vertex.element.VertexElementType;
 import com.ferra13671.cometrenderer.vertex.mesh.Mesh;
 
-public class RoundedRectDrawer extends SimpleDrawer implements Mc {
+public class RoundedOutlinedRectDrawer extends SimpleDrawer implements Mc {
 
-    public RoundedRectDrawer() {
+    public RoundedOutlinedRectDrawer() {
         this(null);
     }
 
-    public RoundedRectDrawer(Runnable preDrawRunnable) {
-        super(preDrawRunnable, Mesh.builder(DrawMode.QUADS, BThackVertexFormats.ROUNDED));
+    public RoundedOutlinedRectDrawer(Runnable preDrawRunnable) {
+        super(preDrawRunnable, Mesh.builder(DrawMode.QUADS, BThackVertexFormats.ROUNDED_OUTLINED));
     }
 
-    public RoundedRectDrawer rectSized(float x, float y, float width, float height, float radius, RectColors rectColors) {
-        return rectPositioned(x, y, x + width, y + height, radius, rectColors);
+    public RoundedOutlinedRectDrawer rectSized(float x, float y, float width, float height, float radius, float outlineSize, RectColors rectColors, RectColors outlineColors) {
+        return rectPositioned(x, y, x + width, y + height, radius, outlineSize, rectColors, outlineColors);
     }
 
-    public RoundedRectDrawer rectPositioned(float x1, float y1, float x2, float y2, float radius, RectColors rectColors) {
+    public RoundedOutlinedRectDrawer rectPositioned(float x1, float y1, float x2, float y2, float radius, float outlineSize, RectColors rectColors, RectColors outlineColors) {
         float[] halfSize = {(x2 - x1) / 2, (y2 - y1) / 2};
         float[] pos = {x1 + halfSize[0], y1 + halfSize[1]};
 
@@ -38,21 +38,29 @@ public class RoundedRectDrawer extends SimpleDrawer implements Mc {
 
         this.meshBuilder.vertex(x1, y1, 0)
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y1Color())
+                .element("Outline Color", BThackVertexElementTypes.RENDER_COLOR, outlineColors.x1y1Color())
+                .element("Outline Size", VertexElementType.FLOAT, outlineSize)
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])
                 .element("Radius", VertexElementType.FLOAT, radius);
         this.meshBuilder.vertex(x1, y2, 0)
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y2Color())
+                .element("Outline Color", BThackVertexElementTypes.RENDER_COLOR, outlineColors.x1y2Color())
+                .element("Outline Size", VertexElementType.FLOAT, outlineSize)
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])
                 .element("Radius", VertexElementType.FLOAT, radius);
         this.meshBuilder.vertex(x2, y2, 0)
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y2Color())
+                .element("Outline Color", BThackVertexElementTypes.RENDER_COLOR, outlineColors.x2y2Color())
+                .element("Outline Size", VertexElementType.FLOAT, outlineSize)
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])
                 .element("Radius", VertexElementType.FLOAT, radius);
         this.meshBuilder.vertex(x2, y1, 0)
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y1Color())
+                .element("Outline Color", BThackVertexElementTypes.RENDER_COLOR, outlineColors.x2y1Color())
+                .element("Outline Size", VertexElementType.FLOAT, outlineSize)
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])
                 .element("Radius", VertexElementType.FLOAT, radius);
@@ -62,7 +70,7 @@ public class RoundedRectDrawer extends SimpleDrawer implements Mc {
 
     @Override
     protected void draw() {
-        CometRenderer.setGlobalProgram(BThackRenderSystem.PROGRAMS.ROUNDED);
+        CometRenderer.setGlobalProgram(BThackRenderSystem.PROGRAMS.ROUNDED_OUTLINED);
 
         CometRenderer.initShaderColor();
         MinecraftPlugin.initMatrix();

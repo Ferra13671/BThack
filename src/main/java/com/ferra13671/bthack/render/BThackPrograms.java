@@ -23,7 +23,14 @@ public class BThackPrograms {
             .name("rounded")
             .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_VERTEX, ShaderType.Vertex)
             .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_FRAGMENT, ShaderType.Fragment)
-            .uniform("resolution", UniformType.VEC2)
+            .uniform("height", UniformType.FLOAT)
+            .build();
+
+    public final GlProgram ROUNDED_OUTLINED = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("rounded-outlined")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_OUTLINED_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_OUTLINED_FRAGMENT, ShaderType.Fragment)
+            .uniform("height", UniformType.FLOAT)
             .build();
 
     public final GlProgram TEXTURE = CometLoaders.IN_JAR.createProgramBuilder()

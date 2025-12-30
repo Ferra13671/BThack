@@ -22,4 +22,13 @@ public class BThackVertexFormats {
             .element("Half Size", VertexElementType.FLOAT, 2)
             .element("Radius", VertexElementType.FLOAT, 1)
             .build();
+
+    public VertexFormat ROUNDED_OUTLINED = VertexFormat.builder()
+            .element("Color", BThackVertexElementTypes.RENDER_COLOR, 1)
+            .element("Outline Color", BThackVertexElementTypes.RENDER_COLOR, 1)
+            .element("Outline Size", VertexElementType.FLOAT, 1)
+            .element("Rect Position", VertexElementType.FLOAT, 2)
+            .element("Half Size", VertexElementType.FLOAT, 2)
+            .element("Radius", VertexElementType.FLOAT, 1)
+            .build();
 }
