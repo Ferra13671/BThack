@@ -4,6 +4,7 @@ import com.ferra13671.bthack.init.InitStageImpl;
 import com.ferra13671.bthack.loader.api.ClientLoader;
 import com.ferra13671.bthack.loader.api.ResourcePath;
 import com.ferra13671.bthack.mixins.IGlBuffer;
+import com.ferra13671.bthack.render.blur.BlurProvider;
 import com.ferra13671.bthack.utils.Mc;
 import com.ferra13671.cometrenderer.CometLoader;
 import com.ferra13671.cometrenderer.CometRenderer;
@@ -12,8 +13,10 @@ import com.ferra13671.cometrenderer.plugins.minecraft.MinecraftPlugin;
 import com.ferra13671.cometrenderer.plugins.shaderlibraries.ShaderLibrariesPlugin;
 import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
+import lombok.experimental.UtilityClass;
 import net.minecraft.client.renderer.CachedOrthoProjectionMatrixBuffer;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -22,10 +25,10 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.stream.Collectors;
 
+@UtilityClass
 public class BThackRenderSystem implements Mc {
-    private static final List<Runnable> queueCalls = new CopyOnWriteArrayList<>();
-    private static CachedOrthoProjectionMatrixBuffer matrix;
-    public static final CometLoader<ResourcePath> COMET_LOADER = new CometLoader<>() {
+    private final List<Runnable> queueCalls = new CopyOnWriteArrayList<>();
+    public final CometLoader<ResourcePath> COMET_LOADER = new CometLoader<>() {
         @Override
         public String load(ResourcePath path) throws Exception {
             InputStream inputStream = ClientLoader.getResource(path);
@@ -34,9 +37,11 @@ public class BThackRenderSystem implements Mc {
             return content;
         }
     };
-    public static BThackShaderEntries SHADER_ENTRIES;
-    public static BThackPrograms PROGRAMS;
-    public static BThackTextures TEXTURES;
+    private CachedOrthoProjectionMatrixBuffer matrix;
+    public BThackShaderEntries SHADER_ENTRIES;
+    public BThackPrograms PROGRAMS;
+    public BThackTextures TEXTURES;
+    public BlurProvider BLUR_PROVIDER;
 
     public static InitStageImpl createInitStage() {
         InitStageImpl initStage = InitStageImpl.of("Init Renderer", () -> matrix = new CachedOrthoProjectionMatrixBuffer("bthack-client-projection-matrix", -1000, 1000, true));
@@ -50,18 +55,19 @@ public class BThackRenderSystem implements Mc {
         initStage.registerLast(InitStageImpl.of("Load shader entries", () -> SHADER_ENTRIES = new BThackShaderEntries()));
         initStage.registerLast(InitStageImpl.of("Compile shaders", () -> PROGRAMS = new BThackPrograms()));
         initStage.registerLast(InitStageImpl.of("Load textures", () -> TEXTURES = new BThackTextures()));
+        initStage.registerLast(InitStageImpl.of("Load blur provider", () -> BLUR_PROVIDER = new BlurProvider()));
 
         return initStage;
     }
 
-    public static void prepareProjection() {
+    public void prepareProjection() {
         float width = mc.getWindow().getWidth();
         float height = mc.getWindow().getHeight();
 
         RenderSystem.setProjectionMatrix(matrix.getBuffer(width, height), ProjectionType.ORTHOGRAPHIC);
     }
 
-    public static void loadShaderLibraries() {
+    public void loadShaderLibraries() {
 
         ShaderLibrariesPlugin.registerShaderLibraries(
                 BThackShaderLibraries.MATRICES,
@@ -70,11 +76,11 @@ public class BThackRenderSystem implements Mc {
         );
     }
 
-    public static void registerRenderCall(Runnable runnable) {
+    public void registerRenderCall(Runnable runnable) {
         queueCalls.add(runnable);
     }
 
-    public static void invokeRenderCalls() {
+    public void invokeRenderCalls() {
         synchronized (queueCalls) {
             if (queueCalls.isEmpty()) return;
 

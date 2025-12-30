@@ -23,4 +23,8 @@ public class BThackShaderEntries {
 
     public final GlslFileEntry TEXTURE_COLOR_VERTEX = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("texture-color.vertex", new ResourcePath("bthack-client", "shaders/impl/texture-color.vert"));
     public final GlslFileEntry TEXTURE_COLOR_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("texture-color.fragment", new ResourcePath("bthack-client", "shaders/impl/texture-color.frag"));
+
+    public final GlslFileEntry BLUR_FRAME_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("blur-frame.fragment", new ResourcePath("bthack-client", "shaders/impl/blur-frame.frag"));
+
+    public final GlslFileEntry BLIT_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("blit.fragment", new ResourcePath("bthack-client", "shaders/impl/blit.frag"));
 }

@@ -46,4 +46,22 @@ public class BThackPrograms {
             .shader(BThackRenderSystem.SHADER_ENTRIES.TEXTURE_COLOR_FRAGMENT, ShaderType.Fragment)
             .sampler("u_Texture")
             .build();
+
+    public final GlProgram BLUR_FRAME = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("blur-frame")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.BLUR_FRAME_FRAGMENT, ShaderType.Fragment)
+            .sampler("u_Texture")
+            .uniform("weights", UniformType.FLOAT_ARRAY)
+            .uniform("offsets", UniformType.VEC2)
+            .uniform("radius", UniformType.INT)
+            .uniform("texelSize", UniformType.VEC2)
+            .build();
+
+    public final GlProgram BLIT = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("blit")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.POSITION_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.BLIT_FRAGMENT, ShaderType.Fragment)
+            .sampler("u_Texture")
+            .build();
 }

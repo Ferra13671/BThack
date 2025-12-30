@@ -1,0 +1,26 @@
+[
+  {
+    "offsets": [ 15.0, 0.0 ],
+    "radius": 3
+  },
+  {
+    "offsets": [ 5.0, 0.0 ],
+    "radius": 3
+  },
+  {
+    "offsets": [ 1.0, 0.0 ],
+    "radius": 3
+  },
+  {
+    "offsets": [ 0.0, 15.0 ],
+    "radius": 3
+  },
+  {
+    "offsets": [ 0.0, 5.0 ],
+    "radius": 3
+  },
+  {
+    "offsets": [ 0.0, 1.0 ],
+    "radius": 3
+  }
+]
