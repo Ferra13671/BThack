@@ -2,6 +2,7 @@ package com.ferra13671.bthack.render.drawer.impl;
 
 import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.render.RectColors;
+import com.ferra13671.bthack.render.TextureBounds;
 import com.ferra13671.bthack.render.drawer.SimpleDrawer;
 import com.ferra13671.bthack.render.vertex.BThackVertexElementTypes;
 import com.ferra13671.bthack.render.vertex.BThackVertexFormats;
@@ -13,55 +14,47 @@ import com.ferra13671.cometrenderer.vertex.mesh.Mesh;
 import com.ferra13671.gltextureutils.GlTex;
 import lombok.Getter;
 
-public class ColoredTextureRectDrawer extends SimpleDrawer {
+public class ColoredTextureDrawer extends SimpleDrawer {
     @Getter
     private GlTex texture;
 
-    public ColoredTextureRectDrawer() {
+    public ColoredTextureDrawer() {
         this(null);
     }
 
-    public ColoredTextureRectDrawer(Runnable preDrawRunnable) {
+    public ColoredTextureDrawer(Runnable preDrawRunnable) {
         super(preDrawRunnable, Mesh.builder(DrawMode.QUADS, BThackVertexFormats.POSITION_TEXTURE_COLOR));
     }
 
-    public ColoredTextureRectDrawer rectSized(float x, float y, float width, float height, RectColors rectColors) {
-        return rectPositioned(x, y, x + width, y + height, 0, 0, 1, 1, rectColors);
+    public ColoredTextureDrawer rectSized(float x, float y, float width, float height, RectColors rectColors, TextureBounds textureBounds) {
+        return rectPositioned(x, y, x + width, y + height, rectColors, textureBounds);
     }
 
-    public ColoredTextureRectDrawer rectSized(float x, float y, float width, float height, float u1, float v1, float u2, float v2, RectColors rectColors) {
-        return rectPositioned(x, y, x + width, y + height, u1, v1, u2, v2, rectColors);
-    }
-
-    public ColoredTextureRectDrawer rectPositioned(float x1, float y1, float x2, float y2, RectColors rectColors) {
-        return rectPositioned(x1, y1, x2, y2, 0, 0, 1, 1, rectColors);
-    }
-
-    public ColoredTextureRectDrawer rectPositioned(float x1, float y1, float x2, float y2, float u1, float v1, float u2, float v2, RectColors rectColors) {
+    public ColoredTextureDrawer rectPositioned(float x1, float y1, float x2, float y2, RectColors rectColors, TextureBounds textureBounds) {
         this.meshBuilder.vertex(x1, y1, 0)
-                .element("Texture", VertexElementType.FLOAT, u1, v1)
+                .element("Texture", VertexElementType.FLOAT, textureBounds.u1(), textureBounds.v1())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y1Color());
         this.meshBuilder.vertex(x1, y2, 0)
-                .element("Texture", VertexElementType.FLOAT, u1, v2)
+                .element("Texture", VertexElementType.FLOAT, textureBounds.u1(), textureBounds.v2())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y2Color());
         this.meshBuilder.vertex(x2, y2, 0)
-                .element("Texture", VertexElementType.FLOAT, u2, v2)
+                .element("Texture", VertexElementType.FLOAT, textureBounds.u2(), textureBounds.v2())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y2Color());
         this.meshBuilder.vertex(x2, y1, 0)
-                .element("Texture", VertexElementType.FLOAT, u2, v1)
+                .element("Texture", VertexElementType.FLOAT, textureBounds.u2(), textureBounds.v1())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y1Color());
 
         return this;
     }
 
-    public ColoredTextureRectDrawer setTexture(GlTex texture) {
+    public ColoredTextureDrawer setTexture(GlTex texture) {
         this.texture = texture;
         return this;
     }
 
     @Override
     protected void draw() {
-        CometRenderer.setGlobalProgram(BThackRenderSystem.PROGRAMS.TEXTURE_COLOR);
+        CometRenderer.setGlobalProgram(BThackRenderSystem.PROGRAMS.COLORED_TEXTURE);
 
         CometRenderer.initShaderColor();
         MinecraftPlugin.initMatrix();

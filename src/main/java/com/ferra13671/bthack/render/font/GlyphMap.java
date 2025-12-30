@@ -2,6 +2,7 @@ package com.ferra13671.bthack.render.font;
 
 import com.ferra13671.bthack.BThackClient;
 import com.ferra13671.bthack.render.BThackRenderSystem;
+import com.ferra13671.bthack.render.TextureBounds;
 import com.ferra13671.gltextureutils.GLTexture;
 import com.ferra13671.gltextureutils.TextureFiltering;
 import com.ferra13671.gltextureutils.TextureWrapping;
@@ -68,10 +69,12 @@ public class GlyphMap implements Closeable {
             graphics.drawString(s, xStep, yStep + fontMetrics.getAscent());
             Glyph glyph = new Glyph(
                     symbol,
-                    xStep / width,
-                    yStep / height,
-                    (xStep + symbolWidth) / width,
-                    (yStep + symbolHeight) / height,
+                    new TextureBounds(
+                            xStep / width,
+                            yStep / height,
+                            (xStep + symbolWidth) / width,
+                            (yStep + symbolHeight) / height
+                    ),
                     symbolWidth,
                     symbolHeight,
                     this

@@ -40,11 +40,19 @@ public class BThackPrograms {
             .sampler("u_Texture")
             .build();
 
-    public final GlProgram TEXTURE_COLOR = CometLoaders.IN_JAR.createProgramBuilder()
-            .name("texture-color")
-            .shader(BThackRenderSystem.SHADER_ENTRIES.TEXTURE_COLOR_VERTEX, ShaderType.Vertex)
-            .shader(BThackRenderSystem.SHADER_ENTRIES.TEXTURE_COLOR_FRAGMENT, ShaderType.Fragment)
+    public final GlProgram COLORED_TEXTURE = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("colored-texture")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.COLORED_TEXTURE_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.COLORED_TEXTURE_FRAGMENT, ShaderType.Fragment)
             .sampler("u_Texture")
+            .build();
+
+    public final GlProgram ROUNDED_TEXTURE = CometLoaders.IN_JAR.createProgramBuilder()
+            .name("rounded-texture")
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_TEXTURE_VERTEX, ShaderType.Vertex)
+            .shader(BThackRenderSystem.SHADER_ENTRIES.ROUNDED_TEXTURE_FRAGMENT, ShaderType.Fragment)
+            .sampler("u_Texture")
+            .uniform("height", UniformType.FLOAT)
             .build();
 
     public final GlProgram BLUR_FRAME = CometLoaders.IN_JAR.createProgramBuilder()

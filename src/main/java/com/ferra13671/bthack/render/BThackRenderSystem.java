@@ -11,6 +11,8 @@ import com.ferra13671.cometrenderer.CometRenderer;
 import com.ferra13671.cometrenderer.plugins.betterexceptions.BetterExceptionsPlugin;
 import com.ferra13671.cometrenderer.plugins.minecraft.MinecraftPlugin;
 import com.ferra13671.cometrenderer.plugins.shaderlibraries.ShaderLibrariesPlugin;
+import com.ferra13671.gltextureutils.GLTexture;
+import com.ferra13671.gltextureutils.loader.TextureLoaders;
 import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.experimental.UtilityClass;
@@ -42,9 +44,16 @@ public class BThackRenderSystem implements Mc {
     public BThackPrograms PROGRAMS;
     public BThackTextures TEXTURES;
     public BlurProvider BLUR_PROVIDER;
+    public GLTexture TEST_TEXTURE;
 
     public static InitStageImpl createInitStage() {
-        InitStageImpl initStage = InitStageImpl.of("Init Renderer", () -> matrix = new CachedOrthoProjectionMatrixBuffer("bthack-client-projection-matrix", -1000, 1000, true));
+        InitStageImpl initStage = InitStageImpl.of("Init Renderer", () -> {
+            matrix = new CachedOrthoProjectionMatrixBuffer("bthack-client-projection-matrix", -1000, 1000, true);
+            TEST_TEXTURE = TextureLoaders.INPUT_STREAM.createTextureBuilder()
+                    .name("test-texture")
+                    .info(ClientLoader.getResource(new ResourcePath("bthack-client", "textures/test.jpg")))
+                    .build();
+        });
 
         initStage.registerLast(InitStageImpl.of("Init CometRenderer", () -> {
             CometRenderer.init();
