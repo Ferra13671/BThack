@@ -13,11 +13,16 @@ import com.ferra13671.bthack.managers.bind.BindController;
 import com.ferra13671.bthack.managers.bind.BindManager;
 import com.ferra13671.bthack.managers.bind.BindType;
 import com.ferra13671.bthack.render.BThackRenderSystem;
+import com.ferra13671.bthack.screen.BThackScreen;
+import com.ferra13671.bthack.screen.impl.UIScreen;
 import com.ferra13671.bthack.utils.Mc;
 import lombok.Getter;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class BThackClient implements ClientEntrypoint, Mc {
     @Getter
@@ -29,9 +34,13 @@ public class BThackClient implements ClientEntrypoint, Mc {
     @Getter
     private final InitStageImpl initProvider = InitStageImpl.of("BThack main stage");
     @Getter
+    private ExecutorService executor;
+    @Getter
     private CategoryManager categoryManager;
     @Getter
     private BindManager bindManager;
+    @Getter
+    private BThackScreen uiScreen;
 
     @Override
     public void preLaunch() {
@@ -41,15 +50,15 @@ public class BThackClient implements ClientEntrypoint, Mc {
 
         this.logger.info("Register main task provider stages...");
 
+        this.initProvider.registerLast(InitStageImpl.of("Create executor", () -> this.executor = Executors.newSingleThreadExecutor()));
         this.initProvider.registerLast(BThackRenderSystem.createInitStage());
         this.initProvider.registerLast(InitStageImpl.of("Init categories", () -> {
             this.categoryManager = new CategoryManager();
 
-            //TODO Category icons
-            this.categoryManager.register(new BThackCategory("Combat", "combat", null));
-            this.categoryManager.register(new BThackCategory("Render", "render", null));
-            this.categoryManager.register(new BThackCategory("Movement", "movement", null));
-            this.categoryManager.register(new BThackCategory("Misc", "misc", null));
+            this.categoryManager.register(new BThackCategory("Combat", "combat", BThackRenderSystem.TEXTURES.COMBAT_CATEGORY_ICON));
+            this.categoryManager.register(new BThackCategory("Render", "render", BThackRenderSystem.TEXTURES.RENDER_CATEGORY_ICON));
+            this.categoryManager.register(new BThackCategory("Player", "player", BThackRenderSystem.TEXTURES.PLAYER_CATEGORY_ICON));
+            this.categoryManager.register(new BThackCategory("Misc", "misc", BThackRenderSystem.TEXTURES.MISC_CATEGORY_ICON));
         }));
         this.initProvider.registerLast(InitStageImpl.of("Init modules", () -> {
             this.bindManager = new BindManager();
@@ -62,6 +71,10 @@ public class BThackClient implements ClientEntrypoint, Mc {
             //TODO remove later
             Modules.test.setBind(new Bind(GLFW.GLFW_KEY_K, BindType.Toggle, BindController.Keyboard));
         }));
+        this.initProvider.registerLast(InitStageImpl.of("Freeze managers", () -> {
+            categoryManager.freeze();
+        }));
+        this.initProvider.registerLast(InitStageImpl.of("Init UI screen", () -> uiScreen = new UIScreen()));
 
         this.logger.info("BThack preLaunch initialization completed in {} ms.", System.currentTimeMillis() - startInitTime);
     }

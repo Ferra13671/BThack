@@ -17,6 +17,7 @@ public class TextDrawer implements Drawer {
     private final Map<GLTexture, ColoredTextureDrawer> drawers = new HashMap<>();
     private final TTFFont font;
     private final Runnable preDrawRunnable;
+    private boolean finalized = false;
 
     public TextDrawer(TTFFont font) {
         this(font, null);
@@ -70,8 +71,14 @@ public class TextDrawer implements Drawer {
     }
 
     @Override
+    public boolean isEnded() {
+        return this.finalized;
+    }
+
+    @Override
     public Drawer end() {
         this.drawers.forEach((_, drawer) -> drawer.end());
+        this.finalized = true;
         return this;
     }
 

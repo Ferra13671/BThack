@@ -3,9 +3,7 @@ package com.ferra13671.bthack.render.drawer;
 import com.ferra13671.cometrenderer.vertex.mesh.Mesh;
 import com.ferra13671.cometrenderer.vertex.mesh.MeshBuilder;
 
-import java.io.Closeable;
-
-public abstract class SimpleDrawer implements Closeable {
+public abstract class SimpleDrawer implements Drawer {
     protected final MeshBuilder meshBuilder;
     protected final Runnable preDrawRunnable;
     protected Mesh mesh = null;
@@ -17,6 +15,12 @@ public abstract class SimpleDrawer implements Closeable {
         this.meshBuilder = meshBuilder;
     }
 
+    @Override
+    public boolean isEnded() {
+        return this.finished;
+    }
+
+    @Override
     public SimpleDrawer end() {
         if (this.finished)
             throw new IllegalStateException("Drawer already finished");
@@ -28,6 +32,7 @@ public abstract class SimpleDrawer implements Closeable {
         return this;
     }
 
+    @Override
     public SimpleDrawer makeStandalone() {
         assertFinished();
         assertNotClosed();
@@ -38,6 +43,7 @@ public abstract class SimpleDrawer implements Closeable {
         return this;
     }
 
+    @Override
     public final SimpleDrawer tryDraw() {
         assertFinished();
         assertNotClosed();

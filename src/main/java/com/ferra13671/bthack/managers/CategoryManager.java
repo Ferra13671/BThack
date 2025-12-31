@@ -12,8 +12,19 @@ import java.util.function.Consumer;
 public class CategoryManager {
     private final HashMap<String, ICategory> categories = new HashMap<>();
     private final HashMap<ICategory, List<IModule>> modules = new HashMap<>();
+    private boolean frozen = false;
+
+    public void freeze() {
+        if (this.frozen)
+            throw new IllegalStateException("CategoryManager already frozen");
+
+        this.frozen = true;
+    }
 
     public <T extends ICategory> T register(T category) {
+        if (this.frozen)
+            throw new IllegalStateException("Cannot register a category after CategoryManager has been frozen");
+
         this.categories.put(category.getId(), category);
         return category;
     }
@@ -30,7 +41,18 @@ public class CategoryManager {
         this.categories.values().forEach(consumer);
     }
 
+    public void forEachModules(ICategory category, Consumer<IModule> consumer) {
+        List<IModule> modules = this.modules.get(category);
+        if (modules == null)
+            throw new IllegalStateException(String.format("Cannot find modules for category %s", category.getId()));
+
+        modules.forEach(consumer);
+    }
+
     public <T extends IModule> T registerModule(T module) {
+        if (this.frozen)
+            throw new IllegalStateException("Cannot register a module after CategoryManager has been frozen");
+
         if (!this.categories.containsValue(module.getCategory()))
             BThackClient.getInstance().getLogger().error("Category '{}', which is used in module '{}', was not registered in category manager.", module.getCategory().getId(), module.getId());
 

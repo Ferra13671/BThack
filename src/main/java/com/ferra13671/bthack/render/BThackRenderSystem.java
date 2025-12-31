@@ -18,7 +18,6 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.experimental.UtilityClass;
 import net.minecraft.client.renderer.CachedOrthoProjectionMatrixBuffer;
 
-import java.awt.*;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -57,7 +56,7 @@ public class BThackRenderSystem implements Mc {
 
         initStage.registerLast(InitStageImpl.of("Init CometRenderer", () -> {
             CometRenderer.init();
-            MinecraftPlugin.init(glGpuBuffer -> ((IGlBuffer) glGpuBuffer)._getHandle(), () -> mc.getWindow().getGuiScale());
+            MinecraftPlugin.init(glGpuBuffer -> ((IGlBuffer) glGpuBuffer).bthack$$$getHandle(), () -> mc.getWindow().getGuiScale());
             BetterExceptionsPlugin.init();
         }));
         initStage.registerLast(InitStageImpl.of("Load shader libraries", BThackRenderSystem::loadShaderLibraries));

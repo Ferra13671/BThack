@@ -4,6 +4,8 @@ import java.io.Closeable;
 
 public interface Drawer extends Closeable {
 
+    boolean isEnded();
+
     Drawer end();
 
     Drawer makeStandalone();

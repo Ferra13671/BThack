@@ -8,5 +8,5 @@ import org.spongepowered.asm.mixin.gen.Accessor;
 public interface IGlBuffer {
 
     @Accessor("handle")
-    int _getHandle();
+    int bthack$$$getHandle();
 }
