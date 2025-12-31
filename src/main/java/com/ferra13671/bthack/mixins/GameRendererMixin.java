@@ -4,6 +4,7 @@ import com.ferra13671.bthack.BThackClient;
 import com.ferra13671.bthack.events.Render2DEvent;
 import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.screen.BThackScreen;
+import com.ferra13671.bthack.utils.MouseUtils;
 import com.ferra13671.cometrenderer.CometRenderer;
 import com.ferra13671.cometrenderer.plugins.minecraft.MinecraftPlugin;
 import net.minecraft.client.DeltaTracker;
@@ -31,7 +32,7 @@ public class GameRendererMixin {
             MinecraftPlugin.unbindMinecraftSamplers();
             CometRenderer.applyDefaultBlend();
 
-            screen.render((int) ((IMouseHandler) minecraft.mouseHandler).bthack$$$getXPos(), (int) ((IMouseHandler) minecraft.mouseHandler).bthack$$$getYPos());
+            screen.render(MouseUtils.getMouseX(), MouseUtils.getMouseY());
         }
 
         BThackRenderSystem.invokeRenderCalls();

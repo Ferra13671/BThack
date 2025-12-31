@@ -6,6 +6,13 @@ import com.ferra13671.gltextureutils.loader.TextureLoaders;
 
 public class BThackTextures {
 
+    public final GLTexture CLIENT_ICON = TextureLoaders.FILE_ENTRY.createTextureBuilder()
+            .name("client.icon")
+            .info(new FileEntry("assets/bthack-client/textures/icon.png", PathMode.INSIDE_JAR))
+            .filtering(TextureFiltering.SMOOTH)
+            .wrapping(TextureWrapping.DEFAULT)
+            .build();
+
     public final GLTexture COMBAT_CATEGORY_ICON = TextureLoaders.FILE_ENTRY.createTextureBuilder()
             .name("category.combat.icon")
             .info(new FileEntry("assets/bthack-client/textures/combat.png", PathMode.INSIDE_JAR))

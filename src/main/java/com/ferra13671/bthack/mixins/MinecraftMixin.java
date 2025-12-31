@@ -15,4 +15,9 @@ public class MinecraftMixin {
     public void modifyTick(CallbackInfo ci) {
         BThackClient.getInstance().getEventBus().activate(new TickEvent());
     }
+
+    @Inject(method = "close", at = @At("HEAD"))
+    public void modifyClose(CallbackInfo ci) {
+        BThackClient.getInstance().getExecutor().close();
+    }
 }

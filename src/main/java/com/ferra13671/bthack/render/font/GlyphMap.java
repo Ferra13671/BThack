@@ -55,7 +55,7 @@ public class GlyphMap implements Closeable {
             float symbolWidth = fontMetrics.charWidth(symbol);
 
             if (xStep + symbolWidth > width) {
-                yStep += symbolHeight;
+                yStep += symbolHeight + 1;
                 xStep = 0;
             }
 

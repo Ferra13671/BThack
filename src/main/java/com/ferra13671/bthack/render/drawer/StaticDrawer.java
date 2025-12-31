@@ -29,6 +29,7 @@ public class StaticDrawer<T extends Drawer> implements IStaticDrawer {
             AtomicBoolean finishIndicator = new AtomicBoolean(false);
             BThackRenderSystem.registerRenderCall(() -> {
                 this.drawer.end();
+                this.drawer.makeStandalone();
                 if (this.prevDrawer != null)
                     this.prevDrawer.close();
                 this.prevDrawer = null;

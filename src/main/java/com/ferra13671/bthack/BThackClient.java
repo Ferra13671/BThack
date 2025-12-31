@@ -14,7 +14,7 @@ import com.ferra13671.bthack.managers.bind.BindManager;
 import com.ferra13671.bthack.managers.bind.BindType;
 import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.screen.BThackScreen;
-import com.ferra13671.bthack.screen.impl.UIScreen;
+import com.ferra13671.bthack.screen.impl.ui.UIScreen;
 import com.ferra13671.bthack.utils.Mc;
 import lombok.Getter;
 import org.lwjgl.glfw.GLFW;

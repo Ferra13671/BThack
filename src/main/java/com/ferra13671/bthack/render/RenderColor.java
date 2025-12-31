@@ -10,6 +10,7 @@ import java.awt.*;
 @AllArgsConstructor
 @Getter
 public class RenderColor {
+    public static RenderColor TRANSLUCENT = RenderColor.of(0f, 0f, 0f, 0f);
     public static RenderColor WHITE = RenderColor.ofRGBA(-1);
     public static RenderColor BLACK = RenderColor.of(0, 0, 0, 255);
 
