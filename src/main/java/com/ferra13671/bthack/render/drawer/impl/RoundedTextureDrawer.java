@@ -2,7 +2,6 @@ package com.ferra13671.bthack.render.drawer.impl;
 
 import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.render.RectColors;
-import com.ferra13671.bthack.render.TextureBounds;
 import com.ferra13671.bthack.render.drawer.SimpleDrawer;
 import com.ferra13671.bthack.render.vertex.BThackVertexElementTypes;
 import com.ferra13671.bthack.render.vertex.BThackVertexFormats;
@@ -14,6 +13,7 @@ import com.ferra13671.cometrenderer.vertex.DrawMode;
 import com.ferra13671.cometrenderer.vertex.element.VertexElementType;
 import com.ferra13671.cometrenderer.vertex.mesh.Mesh;
 import com.ferra13671.gltextureutils.GlTex;
+import com.ferra13671.gltextureutils.atlas.TextureBorder;
 import lombok.Getter;
 
 public class RoundedTextureDrawer extends SimpleDrawer implements Mc {
@@ -28,11 +28,11 @@ public class RoundedTextureDrawer extends SimpleDrawer implements Mc {
         super(preDrawRunnable, Mesh.builder(DrawMode.QUADS, BThackVertexFormats.ROUNDED_TEXTURE));
     }
 
-    public RoundedTextureDrawer rectSized(float x, float y, float width, float height, float radius, RectColors rectColors, TextureBounds textureBounds) {
-        return rectPositioned(x, y, x + width, y + height, radius, rectColors, textureBounds);
+    public RoundedTextureDrawer rectSized(float x, float y, float width, float height, float radius, RectColors rectColors, TextureBorder textureBorder) {
+        return rectPositioned(x, y, x + width, y + height, radius, rectColors, textureBorder);
     }
 
-    public RoundedTextureDrawer rectPositioned(float x1, float y1, float x2, float y2, float radius, RectColors rectColors, TextureBounds textureBounds) {
+    public RoundedTextureDrawer rectPositioned(float x1, float y1, float x2, float y2, float radius, RectColors rectColors, TextureBorder textureBorder) {
         float[] halfSize = {(x2 - x1) / 2, (y2 - y1) / 2};
         float[] pos = {x1 + halfSize[0], y1 + halfSize[1]};
 
@@ -42,25 +42,25 @@ public class RoundedTextureDrawer extends SimpleDrawer implements Mc {
         y2 += 2;
 
         this.meshBuilder.vertex(x1, y1, 0)
-                .element("Texture", VertexElementType.FLOAT, textureBounds.u1(), textureBounds.v1())
+                .element("Texture", VertexElementType.FLOAT, textureBorder.getU1(), textureBorder.getV1())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y1Color())
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])
                 .element("Radius", VertexElementType.FLOAT, radius);
         this.meshBuilder.vertex(x1, y2, 0)
-                .element("Texture", VertexElementType.FLOAT, textureBounds.u1(), textureBounds.v2())
+                .element("Texture", VertexElementType.FLOAT, textureBorder.getU1(), textureBorder.getV2())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x1y2Color())
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])
                 .element("Radius", VertexElementType.FLOAT, radius);
         this.meshBuilder.vertex(x2, y2, 0)
-                .element("Texture", VertexElementType.FLOAT, textureBounds.u2(), textureBounds.v2())
+                .element("Texture", VertexElementType.FLOAT, textureBorder.getU2(), textureBorder.getV2())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y2Color())
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])
                 .element("Radius", VertexElementType.FLOAT, radius);
         this.meshBuilder.vertex(x2, y1, 0)
-                .element("Texture", VertexElementType.FLOAT, textureBounds.u2(), textureBounds.v1())
+                .element("Texture", VertexElementType.FLOAT, textureBorder.getU2(), textureBorder.getV1())
                 .element("Color", BThackVertexElementTypes.RENDER_COLOR, rectColors.x2y1Color())
                 .element("Rect Position", VertexElementType.FLOAT, pos[0], pos[1])
                 .element("Half Size", VertexElementType.FLOAT, halfSize[0], halfSize[1])

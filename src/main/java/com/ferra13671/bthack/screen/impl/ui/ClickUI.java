@@ -2,19 +2,29 @@ package com.ferra13671.bthack.screen.impl.ui;
 
 import com.ferra13671.MegaEvents.eventbus.EventSubscriber;
 import com.ferra13671.MegaEvents.eventbus.IEventBus;
+import com.ferra13671.bthack.BThackClient;
+import com.ferra13671.bthack.events.screen.ChangeCategoryEvent;
 import com.ferra13671.bthack.events.screen.RepositionElementsEvent;
+import com.ferra13671.bthack.features.category.ICategory;
 import com.ferra13671.bthack.render.*;
 import com.ferra13671.bthack.render.drawer.DrawerPool;
 import com.ferra13671.bthack.render.drawer.StaticDrawer;
 import com.ferra13671.bthack.render.drawer.impl.*;
-import com.ferra13671.bthack.screen.api.ScreenObject;
-import com.ferra13671.bthack.screen.impl.ui.sections.CategoryBarSection;
+import com.ferra13671.bthack.screen.api.AbstractScreenObject;
+import com.ferra13671.bthack.screen.api.MouseClick;
+import com.ferra13671.bthack.screen.api.MouseScroll;
+import com.ferra13671.bthack.screen.impl.ui.sections.ClickUISection;
+import com.ferra13671.bthack.screen.impl.ui.sections.categories.CategoriesSection;
 import com.ferra13671.bthack.screen.impl.ui.sections.WatermarkSection;
+import com.ferra13671.bthack.screen.impl.ui.sections.modules.ModulesSection;
 import com.ferra13671.bthack.utils.Mc;
 import com.ferra13671.bthack.utils.StyleConstants;
 import lombok.Getter;
 
-public class ClickUI extends ScreenObject implements Mc {
+import java.util.ArrayList;
+import java.util.List;
+
+public class ClickUI extends AbstractScreenObject implements Mc, Repositionable {
     @Getter
     private final int width = StyleConstants.UI_WIDTH;
     @Getter
@@ -24,9 +34,12 @@ public class ClickUI extends ScreenObject implements Mc {
     @Getter
     private int y;
     @Getter
-    private WatermarkSection watermarkSection;
+    private final WatermarkSection watermarkSection;
     @Getter
-    private CategoryBarSection categoryBarSection;
+    private final CategoriesSection categoriesSection;
+    private final List<ModulesSection> modulesSections = new ArrayList<>();
+    @Getter
+    private ModulesSection currentModules;
     private final DrawerPool platePool = new DrawerPool(
             new StaticDrawer<>(() ->
                     new RoundedBlurDrawer()
@@ -99,24 +112,110 @@ public class ClickUI extends ScreenObject implements Mc {
         super(instanceEventBus);
 
         this.watermarkSection = new WatermarkSection(this, instanceEventBus);
-        this.categoryBarSection = new CategoryBarSection(this, instanceEventBus);
+        this.categoriesSection = new CategoriesSection(this, instanceEventBus);
+
+        for (ICategory category : BThackClient.getInstance().getCategoryManager().getCategories())
+            this.modulesSections.add(new ModulesSection(this, instanceEventBus, category));
+    }
+
+    @Override
+    public void update() {
+        this.watermarkSection.update();
+        this.categoriesSection.update();
     }
 
     @Override
     public void render(int mouseX, int mouseY) {
         this.platePool.draw();
         this.watermarkSection.render(mouseX, mouseY);
-        this.categoryBarSection.render(mouseX, mouseY);
+        this.categoriesSection.render(mouseX, mouseY);
+        if (this.currentModules != null)
+            this.currentModules.render(mouseX, mouseY);
+    }
+
+    @Override
+    public void mouseClicked(MouseClick click) {
+        clickIfHovered(this.watermarkSection, click);
+        clickIfHovered(this.categoriesSection, click);
+        if (this.currentModules != null)
+            clickIfHovered(this.currentModules, click);
+    }
+
+    @Override
+    public void mouseReleased(MouseClick click) {
+        this.watermarkSection.mouseReleased(click);
+        this.categoriesSection.mouseReleased(click);
+        if (this.currentModules != null)
+            this.currentModules.mouseReleased(click);
+    }
+
+    @Override
+    public void mouseScrolled(MouseScroll scroll) {
+        scrollIfHovered(this.watermarkSection, scroll);
+        scrollIfHovered(this.categoriesSection, scroll);
+        if (this.currentModules != null)
+            scrollIfHovered(this.currentModules, scroll);
+    }
+
+    @Override
+    public void mouseMoved(int mouseX, int mouseY) {
+        this.watermarkSection.mouseMoved(mouseX, mouseY);
+        this.categoriesSection.mouseMoved(mouseX, mouseY);
+        if (this.currentModules != null)
+            this.currentModules.mouseMoved(mouseX, mouseY);
+    }
+
+    @Override
+    public void keyTyped(int keyCode) {
+        this.watermarkSection.keyTyped(keyCode);
+        this.categoriesSection.keyTyped(keyCode);
+        if (this.currentModules != null)
+            this.currentModules.keyTyped(keyCode);
+    }
+
+    @Override
+    public void charTyped(int _char) {
+        this.watermarkSection.charTyped(_char);
+        this.categoriesSection.charTyped(_char);
+        if (this.currentModules != null)
+            this.currentModules.charTyped(_char);
+    }
+
+    private void clickIfHovered(ClickUISection section, MouseClick click) {
+        if (section.isMouseOnObject(click.x(), click.y()))
+            section.mouseClicked(click);
+    }
+
+    private void scrollIfHovered(ClickUISection section, MouseScroll scroll) {
+        if (section.isMouseOnObject(scroll.x(), scroll.y()))
+            section.mouseScrolled(scroll);
+    }
+
+    @EventSubscriber(event = ChangeCategoryEvent.class)
+    public void onChangeCategory(ChangeCategoryEvent e) {
+        for (ModulesSection section : this.modulesSections) {
+            if (section.getCategory() == e.category) {
+                this.currentModules = section;
+                return;
+            }
+        }
+
+        this.currentModules = null;
     }
 
     @EventSubscriber(event = RepositionElementsEvent.class, priority = 1000)
     public void onRepositionElements() {
-        initPos();
+        reposition();
         this.platePool.rebuild();
     }
 
-    private void initPos() {
+    @Override
+    public void reposition() {
         this.x = (mc.getWindow().getWidth() / 2) - (this.width / 2);
         this.y = (mc.getWindow().getHeight() / 2) - (this.height / 2);
+
+        this.watermarkSection.reposition();
+        this.categoriesSection.reposition();
+        this.modulesSections.forEach(ModulesSection::reposition);
     }
 }

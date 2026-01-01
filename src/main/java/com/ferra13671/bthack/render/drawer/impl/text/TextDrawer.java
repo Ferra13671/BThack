@@ -51,7 +51,7 @@ public class TextDrawer implements Drawer {
                         glyph.width(),
                         glyph.height(),
                         RectColors.oneColor(color),
-                        glyph.bounds()
+                        glyph.border()
                 );
                 if (text.isShadow())
                     drawer.rectSized(
@@ -60,7 +60,7 @@ public class TextDrawer implements Drawer {
                             glyph.width(),
                             glyph.height(),
                             RectColors.oneColor(RenderColor.BLACK),
-                            glyph.bounds()
+                            glyph.border()
                     );
 
                 x += glyph.width();

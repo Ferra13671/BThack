@@ -1,6 +1,6 @@
 package com.ferra13671.bthack.features.category;
 
-import com.ferra13671.gltextureutils.GlTex;
+import com.ferra13671.gltextureutils.GLTexture;
 
-public record BThackCategory(String getName, String getId, GlTex getIcon) implements ICategory {
+public record BThackCategory(String getName, String getId, GLTexture getIcon) implements ICategory {
 }

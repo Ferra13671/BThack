@@ -13,6 +13,7 @@ import com.ferra13671.bthack.managers.bind.BindController;
 import com.ferra13671.bthack.managers.bind.BindManager;
 import com.ferra13671.bthack.managers.bind.BindType;
 import com.ferra13671.bthack.render.BThackRenderSystem;
+import com.ferra13671.bthack.render.BThackTextureAtlases;
 import com.ferra13671.bthack.screen.BThackScreen;
 import com.ferra13671.bthack.screen.impl.ui.UIScreen;
 import com.ferra13671.bthack.utils.Mc;
@@ -74,6 +75,7 @@ public class BThackClient implements ClientEntrypoint, Mc {
         this.initProvider.registerLast(InitStageImpl.of("Freeze managers", () -> {
             categoryManager.freeze();
         }));
+        this.initProvider.registerLast(InitStageImpl.of("Create texture atlases", () -> BThackRenderSystem.TEXTURE_ATLASES = new BThackTextureAtlases()));
         this.initProvider.registerLast(InitStageImpl.of("Init UI screen", () -> uiScreen = new UIScreen()));
 
         this.logger.info("BThack preLaunch initialization completed in {} ms.", System.currentTimeMillis() - startInitTime);

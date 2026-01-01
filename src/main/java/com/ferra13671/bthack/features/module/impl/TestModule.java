@@ -12,6 +12,5 @@ public class TestModule extends BThackModule implements Mc {
 
     @EventSubscriber(event = Render2DEvent.class)
     public void onRender2D() {
-
     }
 }

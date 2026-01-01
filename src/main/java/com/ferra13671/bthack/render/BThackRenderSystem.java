@@ -41,6 +41,7 @@ public class BThackRenderSystem implements Mc {
     public BThackPrograms PROGRAMS;
     public BThackTextures TEXTURES;
     public BlurProvider BLUR_PROVIDER;
+    public BThackTextureAtlases TEXTURE_ATLASES;
 
     public static InitStageImpl createInitStage() {
         InitStageImpl initStage = InitStageImpl.of("Init Renderer", () -> matrix = new CachedOrthoProjectionMatrixBuffer("bthack-client-projection-matrix", -1000, 1000, true));

@@ -22,6 +22,7 @@ dependencies {
             "com.ferra13671:comet-renderer-better-exceptions:${project.comet_renderer_version}",
             "com.ferra13671:comet-renderer-post-effects:${project.comet_renderer_version}",
             "com.ferra13671:comet-renderer-shader-libraries:${project.comet_renderer_version}",
+            "com.ferra13671:discord-ipc:${project.discord_ipc_version}",
             "com.ferra13671:gl-texture-utils:${project.gl_texture_utils_version}",
             "com.ferra13671:mega-events:${project.mega_events_version}",
             "com.ferra13671:config-provider:${project.config_provider_version}"

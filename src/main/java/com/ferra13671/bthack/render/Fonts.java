@@ -10,8 +10,9 @@ import java.io.InputStream;
 import java.util.HashMap;
 
 public enum Fonts {
-    SEMIBOLD(ClientLoader.getResource(new ResourcePath("bthack-client", "SF-Pro-Rounded-Semibold.otf"))),
-    LIGHT(ClientLoader.getResource(new ResourcePath("bthack-client", "SF-Pro-Rounded-Light.otf")));
+    LIGHT(ClientLoader.getResource(new ResourcePath("bthack-client", "SF-Pro-Rounded-Light.otf"))),
+    REGULAR(ClientLoader.getResource(new ResourcePath("bthack-client", "SF-Pro-Rounded-Regular.otf"))),
+    SEMIBOLD(ClientLoader.getResource(new ResourcePath("bthack-client", "SF-Pro-Rounded-Semibold.otf")));
 
     public final Font font;
     private final HashMap<Integer, TTFFont> fonts = new HashMap<>();

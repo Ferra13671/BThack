@@ -1,17 +1,16 @@
 package com.ferra13671.bthack.screen.impl.ui.sections;
 
-import com.ferra13671.MegaEvents.eventbus.EventSubscriber;
 import com.ferra13671.MegaEvents.eventbus.IEventBus;
-import com.ferra13671.bthack.events.screen.RepositionElementsEvent;
 import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.render.Fonts;
-import com.ferra13671.bthack.render.TextureBounds;
 import com.ferra13671.bthack.render.drawer.DrawerPool;
 import com.ferra13671.bthack.render.drawer.StaticDrawer;
 import com.ferra13671.bthack.render.drawer.impl.BasicTextureDrawer;
 import com.ferra13671.bthack.render.drawer.impl.text.RenderText;
 import com.ferra13671.bthack.render.drawer.impl.text.TextDrawer;
 import com.ferra13671.bthack.screen.impl.ui.ClickUI;
+import com.ferra13671.bthack.utils.StyleConstants;
+import com.ferra13671.gltextureutils.atlas.TextureBorder;
 
 public class WatermarkSection extends ClickUISection {
     private final DrawerPool drawerPool = new DrawerPool(
@@ -23,7 +22,7 @@ public class WatermarkSection extends ClickUISection {
                                     this.y + 1 + 14,
                                     35,
                                     35,
-                                    TextureBounds.FULL
+                                    new TextureBorder(0, 0, 1, 1)
                             )
             ),
             new StaticDrawer<>(() ->
@@ -37,7 +36,7 @@ public class WatermarkSection extends ClickUISection {
     );
 
     public WatermarkSection(ClickUI clickUI, IEventBus instanceEventBus) {
-        super(clickUI, instanceEventBus, 208, 64);
+        super(clickUI, instanceEventBus, StyleConstants.UI_SECTION_WATERMARK_WIDTH, StyleConstants.UI_SECTION_WATERMARK_HEIGHT);
     }
 
     @Override
@@ -45,8 +44,8 @@ public class WatermarkSection extends ClickUISection {
         this.drawerPool.draw();
     }
 
-    @EventSubscriber(event = RepositionElementsEvent.class, priority = 10)
-    public void onRepositionElements() {
+    @Override
+    public void reposition() {
         this.x = this.clickUI.getX() + 1;
         this.y = this.clickUI.getY() + 1;
 

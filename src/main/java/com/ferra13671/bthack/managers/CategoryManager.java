@@ -7,7 +7,6 @@ import com.ferra13671.bthack.features.module.IModule;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.function.Consumer;
 
 public class CategoryManager {
     private final HashMap<String, ICategory> categories = new HashMap<>();
@@ -37,16 +36,14 @@ public class CategoryManager {
         return this.categories.get(id);
     }
 
-    public void forEach(Consumer<ICategory> consumer) {
-        this.categories.values().forEach(consumer);
+    public List<ICategory> getCategories() {
+        return new ArrayList<>(this.categories.values().stream().toList());
     }
 
-    public void forEachModules(ICategory category, Consumer<IModule> consumer) {
-        List<IModule> modules = this.modules.get(category);
-        if (modules == null)
-            throw new IllegalStateException(String.format("Cannot find modules for category %s", category.getId()));
-
-        modules.forEach(consumer);
+    public List<IModule> getModules(ICategory category) {
+        return new ArrayList<>(
+                this.modules.computeIfAbsent(category, _ -> new ArrayList<>())
+        );
     }
 
     public <T extends IModule> T registerModule(T module) {

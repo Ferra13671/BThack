@@ -10,23 +10,33 @@ import com.ferra13671.bthack.utils.Mc;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 public abstract class BThackScreen extends Screen implements Mc {
     protected final IEventBus eventBus = new EventBus();
+    private ScheduledExecutorService updateScreenExecutor;
 
     protected BThackScreen() {
         super(Component.empty());
         this.eventBus.register(this);
     }
 
+    public void update() {}
+
     @Override
     public final void added() {
         this.eventBus.activate(new DisplayScreenEvent());
         this.eventBus.activate(new RepositionElementsEvent());
+        this.updateScreenExecutor = Executors.newSingleThreadScheduledExecutor();
+        this.updateScreenExecutor.scheduleAtFixedRate(this::update, 0, 100, TimeUnit.MILLISECONDS);
     }
 
     @Override
     public final void removed() {
         this.eventBus.activate(new CloseScreenEvent());
+        this.updateScreenExecutor.shutdown();
     }
 
     @Override

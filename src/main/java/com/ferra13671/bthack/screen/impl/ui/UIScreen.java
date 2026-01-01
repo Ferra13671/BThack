@@ -33,6 +33,11 @@ public class UIScreen extends BThackScreen {
     }
 
     @Override
+    public void update() {
+        this.clickUI.update();
+    }
+
+    @Override
     public void render(int mouesX, int mouseY) {
         this.clickUI.render(mouesX, mouseY);
     }
@@ -74,6 +79,11 @@ public class UIScreen extends BThackScreen {
         ));
 
         return false;
+    }
+
+    @Override
+    public void mouseMoved(double x, double y) {
+        BThackClient.getInstance().getExecutor().execute(() -> this.clickUI.mouseMoved(MouseUtils.getMouseX(), MouseUtils.getMouseY()));
     }
 
     @Override

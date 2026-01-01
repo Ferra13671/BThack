@@ -18,6 +18,6 @@ public class MinecraftMixin {
 
     @Inject(method = "close", at = @At("HEAD"))
     public void modifyClose(CallbackInfo ci) {
-        BThackClient.getInstance().getExecutor().close();
+        BThackClient.getInstance().getExecutor().shutdown();
     }
 }
