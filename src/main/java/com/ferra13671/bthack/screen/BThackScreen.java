@@ -4,7 +4,7 @@ import com.ferra13671.MegaEvents.eventbus.IEventBus;
 import com.ferra13671.MegaEvents.eventbus.impl.EventBus;
 import com.ferra13671.bthack.events.screen.CloseScreenEvent;
 import com.ferra13671.bthack.events.screen.DisplayScreenEvent;
-import com.ferra13671.bthack.events.screen.RepositionElementsEvent;
+import com.ferra13671.bthack.events.screen.RebuildElementsEvent;
 import com.ferra13671.bthack.events.screen.ResizeScreenEvent;
 import com.ferra13671.bthack.utils.Mc;
 import net.minecraft.client.gui.screens.Screen;
@@ -28,7 +28,7 @@ public abstract class BThackScreen extends Screen implements Mc {
     @Override
     public final void added() {
         this.eventBus.activate(new DisplayScreenEvent());
-        this.eventBus.activate(new RepositionElementsEvent());
+        this.eventBus.activate(new RebuildElementsEvent());
         this.updateScreenExecutor = Executors.newSingleThreadScheduledExecutor();
         this.updateScreenExecutor.scheduleAtFixedRate(this::update, 0, 100, TimeUnit.MILLISECONDS);
     }
@@ -43,7 +43,7 @@ public abstract class BThackScreen extends Screen implements Mc {
     public final void resize(int width, int height) {
         super.resize(width, height);
         this.eventBus.activate(new ResizeScreenEvent(width, height));
-        this.eventBus.activate(new RepositionElementsEvent());
+        this.eventBus.activate(new RebuildElementsEvent());
     }
 
     public abstract void render(int mouesX, int mouseY);

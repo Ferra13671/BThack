@@ -4,7 +4,8 @@ import com.ferra13671.MegaEvents.eventbus.EventSubscriber;
 import com.ferra13671.MegaEvents.eventbus.IEventBus;
 import com.ferra13671.bthack.BThackClient;
 import com.ferra13671.bthack.events.screen.ChangeCategoryEvent;
-import com.ferra13671.bthack.events.screen.RepositionElementsEvent;
+import com.ferra13671.bthack.events.screen.RebuildModulesSectionEvent;
+import com.ferra13671.bthack.events.screen.RebuildElementsEvent;
 import com.ferra13671.bthack.features.category.ICategory;
 import com.ferra13671.bthack.render.*;
 import com.ferra13671.bthack.render.drawer.DrawerPool;
@@ -24,7 +25,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClickUI extends AbstractScreenObject implements Mc, Repositionable {
+public class ClickUI extends AbstractScreenObject implements Mc, Rebuildable {
     @Getter
     private final int width = StyleConstants.UI_WIDTH;
     @Getter
@@ -41,6 +42,17 @@ public class ClickUI extends AbstractScreenObject implements Mc, Repositionable 
     @Getter
     private ModulesSection currentModules;
     private final DrawerPool platePool = new DrawerPool(
+            new StaticDrawer<>(() ->
+                    new RoundedShadowDrawer()
+                            .rectSized(
+                                    this.x + 9,
+                                    this.y + 9,
+                                    this.width - 11,
+                                    this.height - 11,
+                                    StyleConstants.UI_PLATE_ROUND_RADIUS,
+                                    RectColors.oneColor(RenderColor.of(0f, 0f, 0f, 0.5f))
+                            )
+            ),
             new StaticDrawer<>(() ->
                     new RoundedBlurDrawer()
                             .rectSized(
@@ -122,6 +134,8 @@ public class ClickUI extends AbstractScreenObject implements Mc, Repositionable 
     public void update() {
         this.watermarkSection.update();
         this.categoriesSection.update();
+        if (this.currentModules != null)
+            this.currentModules.update();
     }
 
     @Override
@@ -193,6 +207,8 @@ public class ClickUI extends AbstractScreenObject implements Mc, Repositionable 
 
     @EventSubscriber(event = ChangeCategoryEvent.class)
     public void onChangeCategory(ChangeCategoryEvent e) {
+        this.categoriesSection.rebuild();
+
         for (ModulesSection section : this.modulesSections) {
             if (section.getCategory() == e.category) {
                 this.currentModules = section;
@@ -203,19 +219,25 @@ public class ClickUI extends AbstractScreenObject implements Mc, Repositionable 
         this.currentModules = null;
     }
 
-    @EventSubscriber(event = RepositionElementsEvent.class, priority = 1000)
-    public void onRepositionElements() {
-        reposition();
+    @EventSubscriber(event = RebuildModulesSectionEvent.class)
+    public void onRebuildModulesSection() {
+        if (this.currentModules != null)
+            this.currentModules.rebuild();
+    }
+
+    @EventSubscriber(event = RebuildElementsEvent.class, priority = 1000)
+    public void onRebuildElements() {
+        rebuild();
         this.platePool.rebuild();
     }
 
     @Override
-    public void reposition() {
+    public void rebuild() {
         this.x = (mc.getWindow().getWidth() / 2) - (this.width / 2);
         this.y = (mc.getWindow().getHeight() / 2) - (this.height / 2);
 
-        this.watermarkSection.reposition();
-        this.categoriesSection.reposition();
-        this.modulesSections.forEach(ModulesSection::reposition);
+        this.watermarkSection.rebuild();
+        this.categoriesSection.rebuild();
+        this.modulesSections.forEach(ModulesSection::rebuild);
     }
 }

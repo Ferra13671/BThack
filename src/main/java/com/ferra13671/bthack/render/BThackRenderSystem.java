@@ -11,6 +11,10 @@ import com.ferra13671.cometrenderer.CometRenderer;
 import com.ferra13671.cometrenderer.plugins.betterexceptions.BetterExceptionsPlugin;
 import com.ferra13671.cometrenderer.plugins.minecraft.MinecraftPlugin;
 import com.ferra13671.cometrenderer.plugins.shaderlibraries.ShaderLibrariesPlugin;
+import com.ferra13671.gltextureutils.ColorMode;
+import com.ferra13671.gltextureutils.builder.GLTextureInfo;
+import com.ferra13671.gltextureutils.loader.TextureLoader;
+import com.ferra13671.gltextureutils.loader.TextureLoaders;
 import com.mojang.blaze3d.ProjectionType;
 import com.mojang.blaze3d.systems.RenderSystem;
 import lombok.experimental.UtilityClass;
@@ -34,6 +38,12 @@ public class BThackRenderSystem implements Mc {
             String content = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8)).lines().collect(Collectors.joining("\n"));
             inputStream.close();
             return content;
+        }
+    };
+    public final TextureLoader<ResourcePath> TEXTURE_LOADER = new TextureLoader<>() {
+        @Override
+        public GLTextureInfo load(ResourcePath path, ColorMode colorMode) throws Exception {
+            return TextureLoaders.INPUT_STREAM.load(ClientLoader.getResource(path), colorMode);
         }
     };
     private CachedOrthoProjectionMatrixBuffer matrix;

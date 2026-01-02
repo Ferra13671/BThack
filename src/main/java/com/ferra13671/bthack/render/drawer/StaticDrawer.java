@@ -1,6 +1,5 @@
 package com.ferra13671.bthack.render.drawer;
 
-import com.ferra13671.bthack.BThackClient;
 import com.ferra13671.bthack.render.BThackRenderSystem;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -19,26 +18,19 @@ public class StaticDrawer<T extends Drawer> implements IStaticDrawer {
 
     @Override
     public void rebuild() {
-        BThackClient.getInstance().getExecutor().execute(() -> {
+        BThackRenderSystem.registerRenderCall(() -> {
             this.buildState.set(false);
             this.prevDrawer = this.drawer;
             this.drawer = null;
 
             this.drawer = this.prepareDrawerSupplier.get();
 
-            AtomicBoolean finishIndicator = new AtomicBoolean(false);
-            BThackRenderSystem.registerRenderCall(() -> {
-                this.drawer.end();
-                this.drawer.makeStandalone();
-                if (this.prevDrawer != null)
-                    this.prevDrawer.close();
-                this.prevDrawer = null;
-                this.buildState.set(true);
-                finishIndicator.set(true);
-            });
-
-            while (!finishIndicator.get())
-                Thread.yield();
+            this.drawer.end();
+            this.drawer.makeStandalone();
+            if (this.prevDrawer != null)
+                this.prevDrawer.close();
+            this.prevDrawer = null;
+            this.buildState.set(true);
         });
     }
 

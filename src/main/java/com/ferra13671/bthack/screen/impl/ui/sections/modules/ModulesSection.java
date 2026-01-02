@@ -4,12 +4,16 @@ import com.ferra13671.MegaEvents.eventbus.IEventBus;
 import com.ferra13671.bthack.BThackClient;
 import com.ferra13671.bthack.features.category.ICategory;
 import com.ferra13671.bthack.features.module.IModule;
+import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.render.Fonts;
 import com.ferra13671.bthack.render.drawer.DrawerPool;
 import com.ferra13671.bthack.render.drawer.StaticDrawer;
+import com.ferra13671.bthack.render.drawer.impl.ColoredTextureDrawer;
 import com.ferra13671.bthack.render.drawer.impl.RoundedOutlinedRectDrawer;
 import com.ferra13671.bthack.render.drawer.impl.RoundedRectDrawer;
 import com.ferra13671.bthack.render.drawer.impl.text.TextDrawer;
+import com.ferra13671.bthack.screen.api.MouseClick;
+import com.ferra13671.bthack.screen.api.ScreenObjectImpl;
 import com.ferra13671.bthack.screen.impl.ui.ClickUI;
 import com.ferra13671.bthack.screen.impl.ui.sections.ClickUISection;
 import com.ferra13671.bthack.utils.StyleConstants;
@@ -43,6 +47,13 @@ public class ModulesSection extends ClickUISection {
                 this.moduleButtons.forEach(module -> module.drawModuleName(drawer));
 
                 return drawer;
+            }),
+            new StaticDrawer<>(() -> {
+                ColoredTextureDrawer drawer = new ColoredTextureDrawer().setTexture(BThackRenderSystem.TEXTURE_ATLASES.ICONS);
+
+                this.moduleButtons.forEach(module -> module.drawMenuIcon(drawer));
+
+                return drawer;
             })
     );
 
@@ -54,28 +65,53 @@ public class ModulesSection extends ClickUISection {
         int xOffset = 0;
         int yOffset = 0;
         for (IModule module : BThackClient.getInstance().getCategoryManager().getModules(category)) {
-            this.moduleButtons.add(new ModuleButton(instanceEventBus, this, module, xOffset, yOffset));
+            for (int i = 0; i < 10; i++) {
+                this.moduleButtons.add(new ModuleButton(instanceEventBus, this, module, xOffset, yOffset));
 
-            if (xOffset >= 1) {
-                xOffset = 0;
-                yOffset++;
+                if (xOffset >= 1) {
+                    xOffset = 0;
+                    yOffset++;
+                    continue;
+                }
+
+                xOffset++;
             }
-
-            xOffset++;
         }
     }
 
     @Override
     public void render(int mouseX, int mouseY) {
         this.modulesPool.draw();
+        for (ModuleButton button : this.moduleButtons)
+            button.render(mouseX, mouseY);
+        super.render(mouseX, mouseY);
     }
 
     @Override
-    public void reposition() {
+    public void update() {
+        super.update();
+        this.moduleButtons.forEach(ScreenObjectImpl::update);
+    }
+
+    @Override
+    public void mouseClicked(MouseClick click) {
+        for (ModuleButton button : this.moduleButtons)
+            if (button.isMouseOnObject(click.x(), click.y()))
+                button.mouseClicked(click);
+    }
+
+    @Override
+    public void mouseReleased(MouseClick click) {
+        for (ModuleButton button : this.moduleButtons)
+            button.mouseReleased(click);
+    }
+
+    @Override
+    public void rebuild() {
         this.x = this.clickUI.getCategoriesSection().getX() + this.clickUI.getCategoriesSection().getWidth() + StyleConstants.UI_PLATE_OUTLINE_SIZE;
         this.y = this.clickUI.getY() + this.clickUI.getWatermarkSection().getHeight() + StyleConstants.UI_PLATE_OUTLINE_SIZE;
 
-        this.moduleButtons.forEach(ModuleButton::reposition);
+        this.moduleButtons.forEach(ModuleButton::rebuild);
 
         this.modulesPool.rebuild();
     }

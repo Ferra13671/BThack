@@ -7,7 +7,7 @@ import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.render.Fonts;
 import com.ferra13671.bthack.render.drawer.DrawerPool;
 import com.ferra13671.bthack.render.drawer.StaticDrawer;
-import com.ferra13671.bthack.render.drawer.impl.BasicTextureDrawer;
+import com.ferra13671.bthack.render.drawer.impl.ColoredTextureDrawer;
 import com.ferra13671.bthack.render.drawer.impl.text.TextDrawer;
 import com.ferra13671.bthack.screen.api.MouseClick;
 import com.ferra13671.bthack.screen.api.ScreenObjectImpl;
@@ -22,7 +22,7 @@ public class CategoriesSection extends ClickUISection {
     private final List<CategoryButton> categoryButtons = new ArrayList<>();
     private final DrawerPool categoriesPool = new DrawerPool(
             new StaticDrawer<>(() -> {
-                BasicTextureDrawer textureDrawer = new BasicTextureDrawer()
+                ColoredTextureDrawer textureDrawer = new ColoredTextureDrawer()
                         .setTexture(BThackRenderSystem.TEXTURE_ATLASES.CATEGORIES);
 
                 this.categoryButtons.forEach(button -> button.drawIcon(textureDrawer));
@@ -60,6 +60,8 @@ public class CategoriesSection extends ClickUISection {
         this.categoriesPool.draw();
         for (CategoryButton button : this.categoryButtons)
             button.render(mouseX, mouseY);
+
+        super.render(mouseX, mouseY);
     }
 
     @Override
@@ -70,11 +72,11 @@ public class CategoriesSection extends ClickUISection {
     }
 
     @Override
-    public void reposition() {
+    public void rebuild() {
         this.x = this.clickUI.getX() + 1;
         this.y = this.clickUI.getWatermarkSection().getY() + this.clickUI.getWatermarkSection().getHeight();
 
-        this.categoryButtons.forEach(CategoryButton::reposition);
+        this.categoryButtons.forEach(CategoryButton::rebuild);
         this.categoriesPool.rebuild();
     }
 }

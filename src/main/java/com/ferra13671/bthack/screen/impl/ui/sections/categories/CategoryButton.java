@@ -7,18 +7,18 @@ import com.ferra13671.bthack.render.BThackRenderSystem;
 import com.ferra13671.bthack.render.RectColors;
 import com.ferra13671.bthack.render.RenderColor;
 import com.ferra13671.bthack.render.drawer.StaticDrawer;
-import com.ferra13671.bthack.render.drawer.impl.BasicTextureDrawer;
 import com.ferra13671.bthack.render.drawer.impl.ColoredRectDrawer;
+import com.ferra13671.bthack.render.drawer.impl.ColoredTextureDrawer;
 import com.ferra13671.bthack.render.drawer.impl.text.FormattedText;
 import com.ferra13671.bthack.render.drawer.impl.text.RenderText;
 import com.ferra13671.bthack.render.drawer.impl.text.TextDrawer;
 import com.ferra13671.bthack.screen.api.MouseClick;
 import com.ferra13671.bthack.screen.api.ScreenObjectImpl;
-import com.ferra13671.bthack.screen.impl.ui.Repositionable;
+import com.ferra13671.bthack.screen.impl.ui.Rebuildable;
 import com.ferra13671.bthack.utils.StyleConstants;
 import com.ferra13671.cometrenderer.CometRenderer;
 
-public class CategoryButton extends ScreenObjectImpl implements Repositionable {
+public class CategoryButton extends ScreenObjectImpl implements Rebuildable {
     private final CategoriesSection categoriesSection;
     private final ICategory category;
     private final FormattedText formattedName;
@@ -56,12 +56,19 @@ public class CategoryButton extends ScreenObjectImpl implements Repositionable {
         this.offset = offset;
     }
 
-    public void drawIcon(BasicTextureDrawer textureDrawer) {
+    public void drawIcon(ColoredTextureDrawer textureDrawer) {
         textureDrawer.rectSized(
                 this.getX(),
                 this.getY(),
                 StyleConstants.UI_DEFAULT_ICON_SIZE,
                 StyleConstants.UI_DEFAULT_ICON_SIZE,
+                RectColors.oneColor(
+                        this.categoriesSection.getClickUI().getCurrentModules() != null &&
+                                this.categoriesSection.getClickUI().getCurrentModules().getCategory() == this.category ?
+                                StyleConstants.UI_CATEGORY_SELECTED_COLOR
+                                :
+                                StyleConstants.UI_CATEGORY_DEFAULT_COLOR
+                ),
                 BThackRenderSystem.TEXTURE_ATLASES.CATEGORIES.getBorder(this.category.getIcon())
         );
     }
@@ -72,6 +79,13 @@ public class CategoryButton extends ScreenObjectImpl implements Repositionable {
                         this.formattedName,
                         getX() + StyleConstants.UI_DEFAULT_ICON_SIZE + StyleConstants.UI_CATEGORY_INTERNAL_STEP,
                         getY()
+                )
+                .withColor(
+                        this.categoriesSection.getClickUI().getCurrentModules() != null &&
+                            this.categoriesSection.getClickUI().getCurrentModules().getCategory() == this.category ?
+                                StyleConstants.UI_CATEGORY_SELECTED_COLOR
+                                :
+                                StyleConstants.UI_CATEGORY_DEFAULT_COLOR
                 )
         );
     }
@@ -85,10 +99,12 @@ public class CategoryButton extends ScreenObjectImpl implements Repositionable {
     public void render(int mouseX, int mouseY) {
         if (this.hoveredState.getValue())
             this.selectedLineDrawer.draw();
+
+        super.render(mouseX, mouseY);
     }
 
     @Override
-    public void reposition() {
+    public void rebuild() {
         this.x = this.categoriesSection.getX() + 25;
         this.y = this.categoriesSection.getY() + StyleConstants.UI_CATEGORY_STEP + ((StyleConstants.UI_CATEGORY_STEP + this.height) * offset);
 

@@ -5,7 +5,7 @@ import com.ferra13671.bthack.utils.MouseUtils;
 import com.ferra13671.discordipc.OnChangeHolder;
 import lombok.Getter;
 
-public abstract class ScreenObjectImpl extends AbstractScreenObject {
+public class ScreenObjectImpl extends AbstractScreenObject {
     @Getter protected float x;
     @Getter protected float y;
     @Getter protected float width;
@@ -25,14 +25,14 @@ public abstract class ScreenObjectImpl extends AbstractScreenObject {
         this.height = height;
     }
 
+    @Override
+    public void render(int mouseX, int mouseY) {
+        this.hoveredState.setValue(isMouseOnObject(MouseUtils.getMouseX(), MouseUtils.getMouseY()));
+    }
+
     protected void mouseEnter() {}
 
     protected void mouseLeave() {}
-
-    @Override
-    public void update() {
-        this.hoveredState.setValue(isMouseOnObject(MouseUtils.getMouseX(), MouseUtils.getMouseY()));
-    }
 
     @Override
     public boolean isMouseOnObject(int mouseX, int mouseY) {

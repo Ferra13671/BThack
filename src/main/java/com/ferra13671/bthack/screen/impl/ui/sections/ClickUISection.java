@@ -3,10 +3,10 @@ package com.ferra13671.bthack.screen.impl.ui.sections;
 import com.ferra13671.MegaEvents.eventbus.IEventBus;
 import com.ferra13671.bthack.screen.api.ScreenObjectImpl;
 import com.ferra13671.bthack.screen.impl.ui.ClickUI;
-import com.ferra13671.bthack.screen.impl.ui.Repositionable;
+import com.ferra13671.bthack.screen.impl.ui.Rebuildable;
 import lombok.Getter;
 
-public abstract class ClickUISection extends ScreenObjectImpl implements Repositionable {
+public abstract class ClickUISection extends ScreenObjectImpl implements Rebuildable {
     @Getter
     protected ClickUI clickUI;
 

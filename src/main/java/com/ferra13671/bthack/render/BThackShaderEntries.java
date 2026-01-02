@@ -18,6 +18,8 @@ public class BThackShaderEntries {
     public final GlslFileEntry ROUNDED_OUTLINED_VERTEX = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("rounded-outlined.vertex", new ResourcePath("bthack-client", "shaders/impl/rounded-outlined.vert"));
     public final GlslFileEntry ROUNDED_OUTLINED_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("rounded-outlined.fragment", new ResourcePath("bthack-client", "shaders/impl/rounded-outlined.frag"));
 
+    public final GlslFileEntry ROUNDED_SHADOW_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("rounded-shadow.fragment", new ResourcePath("bthack-client", "shaders/impl/rounded-shadow.frag"));
+
     public final GlslFileEntry TEXTURE_VERTEX = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("texture.vertex", new ResourcePath("bthack-client", "shaders/impl/texture.vert"));
     public final GlslFileEntry TEXTURE_FRAGMENT = BThackRenderSystem.COMET_LOADER.createGlslFileEntry("texture.fragment", new ResourcePath("bthack-client", "shaders/impl/texture.frag"));
 

@@ -42,10 +42,11 @@ public class WatermarkSection extends ClickUISection {
     @Override
     public void render(int mouseX, int mouseY) {
         this.drawerPool.draw();
+        super.render(mouseX, mouseY);
     }
 
     @Override
-    public void reposition() {
+    public void rebuild() {
         this.x = this.clickUI.getX() + 1;
         this.y = this.clickUI.getY() + 1;
 
